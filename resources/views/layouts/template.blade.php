@@ -185,7 +185,7 @@
                             <!-- Header Logo Start -->
                             <div class="header-logo">
                                 <a href="{{ route('home') }}">
-                                    <img src="https://cdn.prod.website-files.com/5df5bf90b0ebe7d8cd4333fb/5e8c523028289f697f322d6e_Birdtour-Asia-CMYK-logo.png" alt="Birdtour Asia">
+                                    <img src="{{ asset('images/kunam-logo.jpg') }}" alt="Kunam Birding Tours" class="rounded">
                                 </a>
                             </div>
                             <!-- Header Logo End -->
