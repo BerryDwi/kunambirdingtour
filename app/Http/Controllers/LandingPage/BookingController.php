@@ -2,59 +2,65 @@
 
 namespace App\Http\Controllers\LandingPage;
 
+use App\Actions\Bookings\CreateBooking;
+use App\Actions\Bookings\SendBookingNotifications;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreBookingRequest;
+use App\Models\HeroSlide;
+use App\Models\Tour;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class BookingController extends Controller
 {
     public function index(): View
     {
-        return view('landing_page.booking');
+        return view('landing_page.booking', $this->viewData());
     }
 
     public function confirm(): View
     {
-        return view('landing_page.booking', ['activeTab' => 'payment-info']);
+        return view('landing_page.booking', $this->viewData() + ['activeTab' => 'payment-info']);
     }
 
-    public function store(Request $request): JsonResponse|RedirectResponse
-    {
-        $validated = $request->validate([
-            'tour_type' => ['required', 'string', 'in:scheduled,custom'],
-            'tour_name' => ['required', 'string', 'max:255'],
-            'tour_year' => ['nullable', 'string', 'max:50'],
-            'currency' => ['required', 'string', 'in:GBP,USD'],
-            'room_preference' => ['required', 'string', 'in:twin_share,single_supplement'],
-            'full_name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'email', 'max:255'],
-            'phone' => ['required', 'string', 'max:50'],
-            'country' => ['required', 'string', 'max:100'],
-            'participants_count' => ['required', 'integer', 'min:1', 'max:20'],
-            'birding_experience' => ['nullable', 'string', 'max:100'],
-            'dietary_medical' => ['nullable', 'string', 'max:1000'],
-            'special_notes' => ['nullable', 'string', 'max:2000'],
-            'terms_accepted' => ['required', 'accepted'],
-        ]);
+    public function store(
+        StoreBookingRequest $request,
+        CreateBooking $createBooking,
+        SendBookingNotifications $sendNotifications,
+    ): JsonResponse|RedirectResponse {
+        $booking = $createBooking->handle($request);
 
-        $referenceCode = 'BTA-'.date('Y').'-'.strtoupper(substr(md5(uniqid((string) mt_rand(), true)), 0, 6));
-
-        $bookingData = array_merge($validated, [
-            'reference_code' => $referenceCode,
-            'submitted_at' => now()->toFormattedDateString(),
-        ]);
+        $sendNotifications->handle($booking);
 
         if ($request->wantsJson()) {
             return response()->json([
                 'success' => true,
                 'message' => 'Thank you for your booking inquiry! Your request has been received.',
-                'reference_code' => $referenceCode,
-                'booking' => $bookingData,
+                'reference_code' => $booking->reference_code,
+                'booking' => $booking->toArray(),
             ]);
         }
 
-        return redirect()->route('booking')->with('booking_success', $bookingData);
+        return redirect()->route('booking')->with('booking_success', [
+            'reference_code' => $booking->reference_code,
+            'full_name' => $booking->full_name,
+            'tour_name' => $booking->tour_name,
+            'email' => $booking->email,
+            'submitted_at' => $booking->created_at->toFormattedDateString(),
+        ]);
+    }
+
+    /**
+     * Data shared by the booking form and confirmation tabs.
+     *
+     * @return array<string, mixed>
+     */
+    private function viewData(): array
+    {
+        return [
+            'slides' => HeroSlide::query()->onPage('booking')->active()->ordered()->get(),
+            'tourGroups' => Tour::query()->published()->ordered()->get()->groupBy('year')->sortKeys(),
+        ];
     }
 }

@@ -4,8 +4,25 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>@yield('title', 'Birdtour Asia: birding tours throughout the continent')</title>
-    <meta name="description" content="Specialists in Asian birding tours, we offer the best in organised and tailor-made tours throughout the continent, from the Middle-east to New Guinea.">
+    @php
+        $metaTitle = trim($__env->yieldContent('title', $settings['meta_title'] ?? 'Birdtour Asia: birding tours throughout the continent'));
+        $metaDescription = trim($__env->yieldContent('meta_description', $settings['meta_description'] ?? 'Specialists in Asian birding tours, we offer the best in organised and tailor-made tours throughout the continent, from the Middle-east to New Guinea.'));
+        $metaImage = $settings['meta_image'] ?? 'https://cdn.prod.website-files.com/5df5bf90b0ebe7d8cd4333fb/5e8c523028289f697f322d6e_Birdtour-Asia-CMYK-logo.png';
+        $canonicalUrl = url()->current();
+    @endphp
+    <title>{{ $metaTitle }}</title>
+    <meta name="description" content="{{ $metaDescription }}">
+    <link rel="canonical" href="{{ $canonicalUrl }}">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="{{ $settings['site_name'] ?? 'Birdtour Asia' }}">
+    <meta property="og:title" content="{{ $metaTitle }}">
+    <meta property="og:description" content="{{ $metaDescription }}">
+    <meta property="og:url" content="{{ $canonicalUrl }}">
+    <meta property="og:image" content="{{ $metaImage }}">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ $metaTitle }}">
+    <meta name="twitter:description" content="{{ $metaDescription }}">
+    <meta name="twitter:image" content="{{ $metaImage }}">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Favicon -->
@@ -300,10 +317,10 @@
 
                 <div class="row text-start text-white g-4 mb-5">
                     <div class="col-lg-4 col-md-6">
-                        <h5 class="fw-bold text-white mb-3 text-uppercase">Birdtour Asia Limited</h5>
-                        <p class="text-white-50 mb-2">26 Sutton Avenue, Derby, DE73 6RJ, United Kingdom</p>
-                        <p class="text-white-50 mb-1">Email: <a href="mailto:info@birdtourasia.com" class="text-white">info@birdtourasia.com</a></p>
-                        <p class="text-white-50">WhatsApp: <a href="tel:+60142234220" class="text-white">+60142234220</a> / <a href="tel:+639208316564" class="text-white">+63 920 831 6564</a></p>
+                        <h5 class="fw-bold text-white mb-3 text-uppercase">{{ $settings['company_name'] ?? 'Birdtour Asia Limited' }}</h5>
+                        <p class="text-white-50 mb-2">{{ $settings['company_address'] ?? '26 Sutton Avenue, Derby, DE73 6RJ, United Kingdom' }}</p>
+                        <p class="text-white-50 mb-1">Email: <a href="mailto:{{ $settings['contact_email'] ?? 'info@birdtourasia.com' }}" class="text-white">{{ $settings['contact_email'] ?? 'info@birdtourasia.com' }}</a></p>
+                        <p class="text-white-50">WhatsApp: <a href="tel:{{ preg_replace('/[^0-9+]/', '', $settings['whatsapp_primary_number'] ?? '+60142234220') }}" class="text-white">{{ $settings['whatsapp_primary_number'] ?? '+60142234220' }}</a> / <a href="tel:{{ preg_replace('/[^0-9+]/', '', $settings['whatsapp_secondary_number'] ?? '+639208316564') }}" class="text-white">{{ $settings['whatsapp_secondary_number'] ?? '+63 920 831 6564' }}</a></p>
                     </div>
                     <div class="col-lg-4 col-md-6">
                         <h5 class="fw-bold text-white mb-3 text-uppercase">Our Tours</h5>
@@ -320,16 +337,16 @@
                         <h5 class="fw-bold text-white mb-3 text-uppercase">About &amp; Field Updates</h5>
                         <p class="text-white-50 mb-3">Join us on Facebook for live dispatches, rare bird photos, and trip updates straight from the field.</p>
                         <div class="footer-widget-social justify-content-start">
-                            <a href="https://www.facebook.com/birdtourasia" target="_blank" rel="noopener"><i class="fab fa-facebook-f"></i></a>
-                            <a href="mailto:info@birdtourasia.com"><i class="fas fa-envelope"></i></a>
-                            <a href="tel:+60142234220"><i class="fab fa-whatsapp"></i></a>
+                            <a href="{{ $settings['facebook_url'] ?? 'https://www.facebook.com/birdtourasia' }}" target="_blank" rel="noopener"><i class="fab fa-facebook-f"></i></a>
+                            <a href="mailto:{{ $settings['contact_email'] ?? 'info@birdtourasia.com' }}"><i class="fas fa-envelope"></i></a>
+                            <a href="tel:{{ preg_replace('/[^0-9+]/', '', $settings['whatsapp_primary_number'] ?? '+60142234220') }}"><i class="fab fa-whatsapp"></i></a>
                         </div>
                     </div>
                 </div>
 
                 <!-- Footer Copyright Start -->
                 <div class="footer-copyright border-top border-secondary pt-4">
-                    <p class="text-white-50 mb-0">© 2005 - {{ date('Y') }} Birdtour Asia Limited. All Rights Reserved.</p>
+                    <p class="text-white-50 mb-0">© {{ $settings['footer_copyright_start'] ?? '2005' }} - {{ date('Y') }} {{ $settings['company_name'] ?? 'Birdtour Asia Limited' }}. All Rights Reserved.</p>
                 </div>
                 <!-- Footer Copyright End -->
             </div>

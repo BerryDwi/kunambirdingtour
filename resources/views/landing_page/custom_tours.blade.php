@@ -1,37 +1,18 @@
 @extends('layouts.template')
 
-@section('title', 'Custom tours - Birdtour Asia')
+@section('title', $settings['meta_title_custom_tours'] ?? 'Custom tours - Birdtour Asia')
+@section('meta_description', $settings['meta_description_custom_tours'] ?? 'Design a tailor-made birding tour with Birdtour Asia, built around your target species, dates, and travel style.')
 
 @section('content')
     <!-- Meeta Hero Slider for Custom Tours (Matching Reference custom-slider) -->
     <div class="meeta-hero-section position-relative">
         <div class="meeta-hero-slider swiper" aria-label="Custom Tours Slider">
             <div class="swiper-wrapper">
-                <!-- Slide 1: Vogelkop Bird-of-paradise -->
-                <div class="swiper-slide meeta-hero-slide">
-                    <img src="https://cdn.prod.website-files.com/5df5bf90b0ebe7d8cd4333fb/5e821abb177d95ae356c759e_Vogelkop%20Bird-of-paradise.avif"
-                        alt="Vogelkop Bird-of-paradise">
-                </div>
-                <!-- Slide 2: Painted Tiger Parrot -->
-                <div class="swiper-slide meeta-hero-slide">
-                    <img src="https://cdn.prod.website-files.com/5df5bf90b0ebe7d8cd4333fb/5e8ac962ab1cf8ac7ea8d5c1_Painted%20Tiger%20Parrot.avif"
-                        alt="Painted Tiger Parrot">
-                </div>
-                <!-- Slide 3: Yellow-eyed Pigeon -->
-                <div class="swiper-slide meeta-hero-slide">
-                    <img src="https://cdn.prod.website-files.com/5df5bf90b0ebe7d8cd4333fb/5e897b584fbaea57dc200816_Yellow-eyed%20Pigeon%20(40).avif"
-                        alt="Yellow-eyed Pigeon">
-                </div>
-                <!-- Slide 4: Beautiful Nuthatch -->
-                <div class="swiper-slide meeta-hero-slide">
-                    <img src="https://cdn.prod.website-files.com/5df5bf90b0ebe7d8cd4333fb/5e88864ecce5fb81e3a8c636_Nuthatch_Beautiful%20104.avif"
-                        alt="Beautiful Nuthatch">
-                </div>
-                <!-- Slide 5: Lapland Longspur -->
-                <div class="swiper-slide meeta-hero-slide">
-                    <img src="https://cdn.prod.website-files.com/5df5bf90b0ebe7d8cd4333fb/5e86ced086c3b0ec93ebe3d9_Longspur_Lapland%207.avif"
-                        alt="Lapland Longspur">
-                </div>
+                @foreach ($slides as $slide)
+                    <div class="swiper-slide meeta-hero-slide">
+                        <img src="{{ $slide->imageUrl() }}" alt="{{ $slide->alt }}">
+                    </div>
+                @endforeach
             </div>
         </div>
 
@@ -82,10 +63,31 @@
                             </div>
                             <div>
                                 <h4 class="fw-bold mb-2" style="color: #172b40; font-size: 20px;">Custom tours looking for participants</h4>
-                                <p class="mb-0 text-muted" style="font-size: 15px;">
-                                    <strong>At the moment there are no custom tours looking for additional
-                                        participants.</strong>
-                                </p>
+                                @if ($customTours->isEmpty())
+                                    <p class="mb-0 text-muted" style="font-size: 15px;">
+                                        <strong>At the moment there are no custom tours looking for additional
+                                            participants.</strong>
+                                    </p>
+                                @else
+                                    <div class="d-flex flex-column gap-3 mt-3">
+                                        @foreach ($customTours as $customTour)
+                                            <div class="p-3 bg-white rounded border">
+                                                <div class="d-flex flex-wrap align-items-center gap-2 mb-1">
+                                                    <h5 class="fw-bold mb-0" style="color: #172b40; font-size: 17px;">{{ $customTour->title }}</h5>
+                                                    @if ($customTour->date_label)
+                                                        <span class="badge bg-success-subtle text-success fw-bold px-2 py-1">{{ $customTour->date_label }}</span>
+                                                    @endif
+                                                </div>
+                                                @if ($customTour->destination)
+                                                    <p class="text-muted small mb-1">{{ $customTour->destination }}</p>
+                                                @endif
+                                                <p class="text-secondary mb-2" style="font-size: 15px;">{{ $customTour->description }}</p>
+                                                <a href="mailto:{{ $customTour->contact_email ?: ($settings['contact_email'] ?? 'info@birdtourasia.com') }}?subject=Custom%20Tour%20Enquiry"
+                                                    class="fw-bold text-success text-decoration-none small">&rarr; Register your interest</a>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -206,11 +208,11 @@
                                 </p>
                             </div>
                             <div class="col-lg-4 text-lg-end">
-                                <a href="mailto:info@birdtourasia.com?subject=Custom%20Tour%20Enquiry"
+                                <a href="mailto:{{ $settings['contact_email'] ?? 'info@birdtourasia.com' }}?subject=Custom%20Tour%20Enquiry"
                                     class="btn btn-primary px-4 py-0 fw-bold rounded-pill w-100 text-center mb-2">
                                     <i class="fas fa-envelope me-2"></i> Contact via Email
                                 </a>
-                                <a href="tel:+60142234220"
+                                <a href="tel:{{ preg_replace('/[^0-9+]/', '', $settings['whatsapp_primary_number'] ?? '+60142234220') }}"
                                     class="btn btn-outline-success px-4 py-0 fw-bold rounded-pill w-100 text-center">
                                     <i class="fab fa-whatsapp me-2"></i> WhatsApp Support
                                 </a>

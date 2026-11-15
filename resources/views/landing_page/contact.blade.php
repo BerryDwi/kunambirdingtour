@@ -1,6 +1,7 @@
 @extends('layouts.template')
 
-@section('title', 'Contact us - Birdtour Asia')
+@section('title', $settings['meta_title_contact'] ?? 'Contact us - Birdtour Asia')
+@section('meta_description', $settings['meta_description_contact'] ?? 'Contact Birdtour Asia to ask about scheduled departures, custom birding tours, or your existing booking.')
 
 @push('styles')
     <style>
@@ -66,21 +67,11 @@
     <div class="meeta-hero-section position-relative">
         <div class="meeta-hero-slider swiper" aria-label="Birdtour Asia Contact Slider">
             <div class="swiper-wrapper">
-                <!-- Slide 1: Oriental Plover -->
-                <div class="swiper-slide meeta-hero-slide">
-                    <img src="https://cdn.prod.website-files.com/5df5bf90b0ebe7d8cd4333fb/6828344570093a50ccb5faa6_Plover_Oriental.avif"
-                        alt="Oriental Plover">
-                </div>
-                <!-- Slide 2: Painted Tiger Parrot -->
-                <div class="swiper-slide meeta-hero-slide">
-                    <img src="https://cdn.prod.website-files.com/5df5bf90b0ebe7d8cd4333fb/5e8ac962ab1cf8ac7ea8d5c1_Painted%20Tiger%20Parrot.avif"
-                        alt="Painted Tiger Parrot">
-                </div>
-                <!-- Slide 3: Vogelkop Bird-of-paradise -->
-                <div class="swiper-slide meeta-hero-slide">
-                    <img src="https://cdn.prod.website-files.com/5df5bf90b0ebe7d8cd4333fb/5e821abb177d95ae356c759e_Vogelkop%20Bird-of-paradise.avif"
-                        alt="Vogelkop Bird-of-paradise">
-                </div>
+                @foreach ($slides as $slide)
+                    <div class="swiper-slide meeta-hero-slide">
+                        <img src="{{ $slide->imageUrl() }}" alt="{{ $slide->alt }}">
+                    </div>
+                @endforeach
             </div>
         </div>
 
@@ -159,16 +150,16 @@
                         </p>
                         <div class="mb-3">
                             <span class="d-block small text-muted">General Tour Enquiries:</span>
-                            <a href="mailto:info@birdtourasia.com?subject=Tour%20enquiry"
+                            <a href="mailto:{{ $settings['contact_email'] ?? 'info@birdtourasia.com' }}?subject=Tour%20enquiry"
                                 class="fw-bold text-success text-decoration-none fs-6">
-                                info@birdtourasia.com &rarr;
+                                {{ $settings['contact_email'] ?? 'info@birdtourasia.com' }} &rarr;
                             </a>
                         </div>
                         <div class="pt-2 border-top border-light">
                             <span class="d-block small text-muted">Office Manager, Bob:</span>
-                            <a href="mailto:office@birdtourasia.com?subject=Tour%20enquiry"
+                            <a href="mailto:{{ $settings['office_email'] ?? 'office@birdtourasia.com' }}?subject=Tour%20enquiry"
                                 class="fw-bold text-dark text-decoration-none small">
-                                office@birdtourasia.com &rarr;
+                                {{ $settings['office_email'] ?? 'office@birdtourasia.com' }} &rarr;
                             </a>
                         </div>
                     </div>
@@ -188,20 +179,20 @@
                         <div class="d-flex flex-column gap-2 mb-2">
                             <div class="whatsapp-leader-card d-flex justify-content-between align-items-center">
                                 <div>
-                                    <strong class="d-block text-dark">James Eaton</strong>
-                                    <span class="text-muted small">+60142234220</span>
+                                    <strong class="d-block text-dark">{{ $settings['whatsapp_primary_name'] ?? 'James Eaton' }}</strong>
+                                    <span class="text-muted small">{{ $settings['whatsapp_primary_number'] ?? '+60142234220' }}</span>
                                 </div>
-                                <a href="https://wa.me/60142234220" target="_blank" rel="noopener"
+                                <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $settings['whatsapp_primary_number'] ?? '60142234220') }}" target="_blank" rel="noopener"
                                     class="btn btn-sm btn-success px-2 py-1">
                                     <i class="fab fa-whatsapp me-1"></i> Chat
                                 </a>
                             </div>
                             <div class="whatsapp-leader-card d-flex justify-content-between align-items-center">
                                 <div>
-                                    <strong class="d-block text-dark">Rob Hutchinson</strong>
-                                    <span class="text-muted small">+63 920 831 6564</span>
+                                    <strong class="d-block text-dark">{{ $settings['whatsapp_secondary_name'] ?? 'Rob Hutchinson' }}</strong>
+                                    <span class="text-muted small">{{ $settings['whatsapp_secondary_number'] ?? '+63 920 831 6564' }}</span>
                                 </div>
-                                <a href="https://wa.me/639208316564" target="_blank" rel="noopener"
+                                <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $settings['whatsapp_secondary_number'] ?? '639208316564') }}" target="_blank" rel="noopener"
                                     class="btn btn-sm btn-success px-2 py-1">
                                     <i class="fab fa-whatsapp me-1"></i> Chat
                                 </a>
@@ -222,17 +213,16 @@
                             Connect on Facebook for latest dispatches, species sightings, and trip albums.
                         </p>
                         <div class="mb-3">
-                            <a href="https://www.facebook.com/birdtourasia" target="_blank" rel="noopener"
+                            <a href="{{ $settings['facebook_url'] ?? 'https://www.facebook.com/birdtourasia' }}" target="_blank" rel="noopener"
                                 class="btn btn-outline-primary btn-sm w-100 py-2 fw-bold">
-                                <i class="fab fa-facebook-square me-2"></i> Visit Facebook Page
+                                <i class="fab fa-facebook-square me-2"></i> {{ $settings['facebook_button_label'] ?? 'Visit Facebook Page' }}
                             </a>
                         </div>
                         <div class="pt-2 border-top border-light">
                             <span class="d-block small text-muted">Registered Office:</span>
                             <address class="small text-secondary mb-0" style="line-height: 1.5;">
-                                <strong>Birdtour Asia Limited</strong><br>
-                                26 Sutton Avenue, Derby, DE73 6RJ<br>
-                                United Kingdom
+                                <strong>{{ $settings['company_name'] ?? 'Birdtour Asia Limited' }}</strong><br>
+                                {{ $settings['company_address'] ?? '26 Sutton Avenue, Derby, DE73 6RJ, United Kingdom' }}
                             </address>
                         </div>
                     </div>
@@ -277,6 +267,12 @@
 
                         <form action="{{ route('contact.send') }}" method="POST" class="p-4 p-md-5">
                             @csrf
+
+                            {{-- Honeypot: hidden from people, tempting for bots. --}}
+                            <div style="position: absolute; left: -9999px;" aria-hidden="true">
+                                <label for="website">Website</label>
+                                <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
+                            </div>
 
                             @if ($errors->any())
                                 <div class="alert alert-danger mb-4 rounded-3">

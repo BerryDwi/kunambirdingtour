@@ -1,6 +1,7 @@
 @extends('layouts.template')
 
-@section('title', 'Booking with us & Flowchart - Birdtour Asia')
+@section('title', $settings['meta_title_booking'] ?? 'Booking with us & Flowchart - Birdtour Asia')
+@section('meta_description', $settings['meta_description_booking'] ?? 'Book a Birdtour Asia birding tour online, review payment details, and reserve your place with our team.')
 
 @push('styles')
 <style>
@@ -395,7 +396,7 @@
                                         </div>
                                         <h5 class="fw-bold mb-2" style="color: #172b40;">Enquire &amp; Reserve</h5>
                                         <p class="text-muted small mb-3">
-                                            Submit our online booking form or email <a href="mailto:info@birdtourasia.com?subject=Booking%20enquiry" class="text-success fw-bold">info@birdtourasia.com</a>. We verify spaces and provisionally hold your place.
+                                            Submit our online booking form or email <a href="mailto:{{ $settings['contact_email'] ?? 'info@birdtourasia.com' }}?subject=Booking%20enquiry" class="text-success fw-bold">{{ $settings['contact_email'] ?? 'info@birdtourasia.com' }}</a>. We verify spaces and provisionally hold your place.
                                         </p>
                                         <div class="mt-auto pt-2 border-top border-light">
                                             <span class="text-primary small fw-bold"><i class="fas fa-handshake me-1"></i> Mutual Confirmation</span>
@@ -510,7 +511,7 @@
                                         </div>
                                         <h5 class="fw-bold mb-2" style="color: #172b40;">Email or WhatsApp Us</h5>
                                         <p class="text-muted small mb-3">
-                                            Tell us your dream destinations, target bird species (e.g. Pittas, Birds-of-Paradise, Owls), preferred dates, and group size. WhatsApp: <a href="tel:+60142234220" class="text-success fw-bold">+60142234220</a>.
+                                            Tell us your dream destinations, target bird species (e.g. Pittas, Birds-of-Paradise, Owls), preferred dates, and group size. WhatsApp: <a href="tel:{{ preg_replace('/[^0-9+]/', '', $settings['whatsapp_primary_number'] ?? '+60142234220') }}" class="text-success fw-bold">{{ $settings['whatsapp_primary_number'] ?? '+60142234220' }}</a>.
                                         </p>
                                     </div>
                                 </div>
@@ -625,6 +626,12 @@
                             <form id="bookingForm" action="{{ route('booking.store') }}" method="POST" class="p-4 p-md-5">
                                 @csrf
 
+                                {{-- Honeypot: hidden from people, tempting for bots. --}}
+                                <div style="position: absolute; left: -9999px;" aria-hidden="true">
+                                    <label for="website">Website</label>
+                                    <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
+                                </div>
+
                                 <!-- STEP 1: TOUR SELECTION -->
                                 <div class="form-step-content" id="step1">
                                     <h4 class="fw-bold mb-4" style="color: #172b40;">Step 1: Select Your Tour &amp; Currency</h4>
@@ -654,25 +661,13 @@
                                             <label for="tour_name" class="form-label fw-bold">Select Destination / Tour Name <span class="text-danger">*</span></label>
                                             <select class="form-select form-select-lg" id="tour_name" name="tour_name" required>
                                                 <option value="" disabled selected>-- Choose a tour or custom destination --</option>
-                                                <optgroup label="2027 Scheduled Departures">
-                                                    <option value="China in winter (Jan - Mar 2027)">China in winter (Jan - Mar 2027)</option>
-                                                    <option value="Central & Southern Vietnam (Jan - Feb 2027)">Central &amp; Southern Vietnam (Jan - Feb 2027)</option>
-                                                    <option value="Philippines: Main Islands & Mindanao (Feb - Mar 2027)">Philippines: Main Islands &amp; Mindanao (Feb - Mar 2027)</option>
-                                                    <option value="Cambodia: Giant Ibis & Bengal Florican (Mar 2027)">Cambodia: Giant Ibis &amp; Bengal Florican (Mar 2027)</option>
-                                                    <option value="Northeast India & Assam (Mar 2027)">Northeast India &amp; Assam (Mar 2027)</option>
-                                                    <option value="Borneo: Sabah & Sarawak (Jul - Aug 2027)">Borneo: Sabah &amp; Sarawak (Jul - Aug 2027)</option>
-                                                    <option value="Bhutan: Himalayan Specialities (Apr 2027)">Bhutan: Himalayan Specialities (Apr 2027)</option>
-                                                    <option value="Sumatra & West Java (Aug 2027)">Sumatra &amp; West Java (Aug 2027)</option>
-                                                    <option value="West Papua & Birds-of-Paradise (Aug - Sep 2027)">West Papua &amp; Birds-of-Paradise (Aug - Sep 2027)</option>
-                                                    <option value="Sri Lanka: Endemics & Blue Whales (Nov 2027)">Sri Lanka: Endemics &amp; Blue Whales (Nov 2027)</option>
-                                                </optgroup>
-                                                <optgroup label="2028 Scheduled Departures">
-                                                    <option value="Japan Winter Birding & Cranes (Jan - Feb 2028)">Japan Winter Birding &amp; Cranes (Jan - Feb 2028)</option>
-                                                    <option value="Halmahera & Sulawesi Cruise (Sep 2028)">Halmahera &amp; Sulawesi Cruise (Sep 2028)</option>
-                                                    <option value="Taiwan Endemics Special (Nov 2028)">Taiwan Endemics Special (Nov 2028)</option>
-                                                    <option value="Kazakhstan & Central Asia (May 2028)">Kazakhstan &amp; Central Asia (May 2028)</option>
-                                                    <option value="Socotra & Oman (Nov 2028)">Socotra &amp; Oman (Nov 2028)</option>
-                                                </optgroup>
+                                                @foreach ($tourGroups as $year => $tours)
+                                                    <optgroup label="{{ $year }} Scheduled Departures">
+                                                        @foreach ($tours as $tour)
+                                                            <option value="{{ $tour->name }} ({{ $tour->year }})">{{ $tour->name }} ({{ $tour->year }})</option>
+                                                        @endforeach
+                                                    </optgroup>
+                                                @endforeach
                                                 <optgroup label="Custom / Tailormade">
                                                     <option value="Custom Itinerary - Indonesia">Custom Itinerary - Indonesia</option>
                                                     <option value="Custom Itinerary - Philippines">Custom Itinerary - Philippines</option>
@@ -910,45 +905,45 @@
                                 <div class="bank-info-item">
                                     <span class="text-muted">Account Name:</span>
                                     <div class="d-flex align-items-center gap-2">
-                                        <strong id="gbp_name">Birdtour Asia Limited</strong>
+                                        <strong id="gbp_name">{{ $settings['bank_account_name'] ?? 'Birdtour Asia Limited' }}</strong>
                                         <button class="copy-btn" onclick="copyText('gbp_name')"><i class="fas fa-copy"></i></button>
                                     </div>
                                 </div>
                                 <div class="bank-info-item">
                                     <span class="text-muted">Bank Name:</span>
-                                    <span class="fw-bold">NatWest Bank Plc</span>
+                                    <span class="fw-bold">{{ $settings['bank_name'] ?? 'NatWest Bank Plc' }}</span>
                                 </div>
                                 <div class="bank-info-item">
                                     <span class="text-muted">Sort Code:</span>
                                     <div class="d-flex align-items-center gap-2">
-                                        <strong id="gbp_sort">60-06-33</strong>
+                                        <strong id="gbp_sort">{{ $settings['bank_gbp_sort_code'] ?? '60-06-33' }}</strong>
                                         <button class="copy-btn" onclick="copyText('gbp_sort')"><i class="fas fa-copy"></i></button>
                                     </div>
                                 </div>
                                 <div class="bank-info-item">
                                     <span class="text-muted">Account Number:</span>
                                     <div class="d-flex align-items-center gap-2">
-                                        <strong id="gbp_acc">48920114</strong>
+                                        <strong id="gbp_acc">{{ $settings['bank_gbp_account_number'] ?? '48920114' }}</strong>
                                         <button class="copy-btn" onclick="copyText('gbp_acc')"><i class="fas fa-copy"></i></button>
                                     </div>
                                 </div>
                                 <div class="bank-info-item">
                                     <span class="text-muted">IBAN:</span>
                                     <div class="d-flex align-items-center gap-2">
-                                        <span class="font-monospace small fw-bold" id="gbp_iban">GB17 NWBK 6006 3348 9201 14</span>
+                                        <span class="font-monospace small fw-bold" id="gbp_iban">{{ $settings['bank_gbp_iban'] ?? 'GB17 NWBK 6006 3348 9201 14' }}</span>
                                         <button class="copy-btn" onclick="copyText('gbp_iban')"><i class="fas fa-copy"></i></button>
                                     </div>
                                 </div>
                                 <div class="bank-info-item">
                                     <span class="text-muted">BIC / SWIFT:</span>
                                     <div class="d-flex align-items-center gap-2">
-                                        <strong id="gbp_bic">NWBK GB 2L</strong>
+                                        <strong id="gbp_bic">{{ $settings['bank_gbp_bic'] ?? 'NWBK GB 2L' }}</strong>
                                         <button class="copy-btn" onclick="copyText('gbp_bic')"><i class="fas fa-copy"></i></button>
                                     </div>
                                 </div>
 
                                 <div class="mt-4 pt-3 border-top text-center">
-                                    <a href="https://cdn.prod.website-files.com/5df5bf90b0ebe7d8cd4333fb/66c2dec4fb85b8aa220c4cc7_Birdtour%20Asia%20Limited%20bank%20details%20GBP.pdf" target="_blank" rel="noopener" class="btn btn-outline-success w-100 py-2 fw-bold">
+                                    <a href="{{ $settings['bank_gbp_pdf_url'] ?? 'https://cdn.prod.website-files.com/5df5bf90b0ebe7d8cd4333fb/66c2dec4fb85b8aa220c4cc7_Birdtour%20Asia%20Limited%20bank%20details%20GBP.pdf' }}" target="_blank" rel="noopener" class="btn btn-outline-success w-100 py-2 fw-bold">
                                         <i class="fas fa-file-pdf me-2"></i> Download Official GBP Payment Sheet (PDF)
                                     </a>
                                 </div>
@@ -973,13 +968,13 @@
                                 <div class="bank-info-item">
                                     <span class="text-muted">Account Name:</span>
                                     <div class="d-flex align-items-center gap-2">
-                                        <strong id="usd_name">Birdtour Asia Limited</strong>
+                                        <strong id="usd_name">{{ $settings['bank_account_name'] ?? 'Birdtour Asia Limited' }}</strong>
                                         <button class="copy-btn" onclick="copyText('usd_name')"><i class="fas fa-copy"></i></button>
                                     </div>
                                 </div>
                                 <div class="bank-info-item">
                                     <span class="text-muted">Bank Name:</span>
-                                    <span class="fw-bold">NatWest Bank Plc</span>
+                                    <span class="fw-bold">{{ $settings['bank_name'] ?? 'NatWest Bank Plc' }}</span>
                                 </div>
                                 <div class="bank-info-item">
                                     <span class="text-muted">Currency:</span>
@@ -988,24 +983,24 @@
                                 <div class="bank-info-item">
                                     <span class="text-muted">Account Number:</span>
                                     <div class="d-flex align-items-center gap-2">
-                                        <strong id="usd_acc">140-0-03094892</strong>
+                                        <strong id="usd_acc">{{ $settings['bank_usd_account_number'] ?? '140-0-03094892' }}</strong>
                                         <button class="copy-btn" onclick="copyText('usd_acc')"><i class="fas fa-copy"></i></button>
                                     </div>
                                 </div>
                                 <div class="bank-info-item">
                                     <span class="text-muted">SWIFT / BIC:</span>
                                     <div class="d-flex align-items-center gap-2">
-                                        <strong id="usd_bic">NWBK GB 2L</strong>
+                                        <strong id="usd_bic">{{ $settings['bank_usd_swift'] ?? 'NWBK GB 2L' }}</strong>
                                         <button class="copy-btn" onclick="copyText('usd_bic')"><i class="fas fa-copy"></i></button>
                                     </div>
                                 </div>
                                 <div class="bank-info-item">
                                     <span class="text-muted">Bank Country:</span>
-                                    <span class="fw-bold">United Kingdom</span>
+                                    <span class="fw-bold">{{ $settings['bank_usd_country'] ?? 'United Kingdom' }}</span>
                                 </div>
 
                                 <div class="mt-4 pt-3 border-top text-center">
-                                    <a href="https://cdn.prod.website-files.com/5df5bf90b0ebe7d8cd4333fb/66c2dec488add2c72f8fa83a_Birdtour%20Asia%20Limited%20bank%20details%20USD.pdf" target="_blank" rel="noopener" class="btn btn-outline-primary w-100 py-2 fw-bold">
+                                    <a href="{{ $settings['bank_usd_pdf_url'] ?? 'https://cdn.prod.website-files.com/5df5bf90b0ebe7d8cd4333fb/66c2dec488add2c72f8fa83a_Birdtour%20Asia%20Limited%20bank%20details%20USD.pdf' }}" target="_blank" rel="noopener" class="btn btn-outline-primary w-100 py-2 fw-bold">
                                         <i class="fas fa-file-pdf me-2"></i> Download Official USD Payment Sheet (PDF)
                                     </a>
                                 </div>
@@ -1119,10 +1114,10 @@
                             <p class="text-white-50 small mb-0">Our tour leaders are ready to assist with itineraries, flights, and dates.</p>
                         </div>
                         <div class="d-flex flex-wrap gap-2">
-                            <a href="https://wa.me/60142234220" target="_blank" rel="noopener" class="btn btn-success py-2 px-3 fw-bold">
-                                <i class="fab fa-whatsapp me-1"></i> WhatsApp (+60142234220)
+                            <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $settings['whatsapp_primary_number'] ?? '60142234220') }}" target="_blank" rel="noopener" class="btn btn-success py-2 px-3 fw-bold">
+                                <i class="fab fa-whatsapp me-1"></i> WhatsApp ({{ $settings['whatsapp_primary_number'] ?? '+60142234220' }})
                             </a>
-                            <a href="mailto:info@birdtourasia.com?subject=Booking%20enquiry" class="btn btn-outline-light py-2 px-3 fw-bold">
+                            <a href="mailto:{{ $settings['contact_email'] ?? 'info@birdtourasia.com' }}?subject=Booking%20enquiry" class="btn btn-outline-light py-2 px-3 fw-bold">
                                 <i class="fas fa-envelope me-1"></i> Email Us
                             </a>
                         </div>

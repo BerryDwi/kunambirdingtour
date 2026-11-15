@@ -2,34 +2,38 @@
 
 namespace App\Http\Controllers\LandingPage;
 
+use App\Actions\Contact\SendContactMessageNotifications;
+use App\Actions\Contact\StoreContactMessage;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreContactRequest;
+use App\Models\HeroSlide;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class ContactController extends Controller
 {
     public function index(): View
     {
-        return view('landing_page.contact');
+        return view('landing_page.contact', [
+            'slides' => HeroSlide::query()->onPage('contact')->active()->ordered()->get(),
+        ]);
     }
 
-    public function send(Request $request): JsonResponse|RedirectResponse
-    {
-        $validated = $request->validate([
-            'first_name' => ['required', 'string', 'max:100'],
-            'last_name' => ['required', 'string', 'max:100'],
-            'email' => ['required', 'email', 'max:255'],
-            'phone' => ['nullable', 'string', 'max:50'],
-            'message' => ['required', 'string', 'max:3000'],
-        ]);
+    public function send(
+        StoreContactRequest $request,
+        StoreContactMessage $storeContactMessage,
+        SendContactMessageNotifications $sendNotifications,
+    ): JsonResponse|RedirectResponse {
+        $contactMessage = $storeContactMessage->handle($request);
+
+        $sendNotifications->handle($contactMessage);
 
         if ($request->wantsJson()) {
             return response()->json([
                 'success' => true,
                 'message' => 'Thank you! Your submission has been received! We will be in touch shortly.',
-                'data' => $validated,
+                'data' => $contactMessage->toArray(),
             ]);
         }
 
