@@ -8,7 +8,6 @@ use App\Mail\Bookings\BookingAutoReply;
 use App\Mail\Bookings\NewBookingReceived;
 use App\Models\Booking;
 use App\Models\Setting;
-use App\Models\Tour;
 use Database\Seeders\DatabaseSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Mail;
@@ -27,46 +26,29 @@ class BookingTest extends TestCase
         Mail::fake();
     }
 
-    public function test_booking_page_renders_the_booking_flow_and_bank_sheets(): void
+    public function test_booking_page_renders_successfully_with_faqs_and_direct_contact(): void
     {
         $response = $this->get('/booking');
 
         $response->assertOk();
         $response->assertSee('Booking with Birdtour Asia');
-        $response->assertSee('Scheduled Tours Flowchart');
-        $response->assertSee('Custom Tours Flowchart');
-        $response->assertSee('Online Booking &amp; Reservation Form', false);
-        $response->assertSee('Official Bank Payment Sheets');
-        $response->assertSee('Birdtour%20Asia%20Limited%20bank%20details%20GBP.pdf', false);
-        $response->assertSee('Birdtour%20Asia%20Limited%20bank%20details%20USD.pdf', false);
-        $response->assertSee('GB17 NWBK 6006 3348 9201 14');
-        $response->assertSee('140-0-03094892');
+        $response->assertSee('Booking FAQs');
+        $response->assertSee('How much is the deposit and when is it required?');
+        $response->assertDontSee('Scheduled Tours Flowchart');
+        $response->assertDontSee('Custom Tours Flowchart');
+        $response->assertDontSee('Online Booking &amp; Reservation Form', false);
+        $response->assertDontSee('Official Bank Payment Sheets');
+        $response->assertDontSee('Financial Consumer Protection (IPP London)', false);
     }
 
-    public function test_booking_tour_dropdown_is_generated_from_published_tours(): void
+    public function test_booking_contact_links_follow_the_settings(): void
     {
-        Tour::factory()->draft()->create(['name' => 'Hidden Draft Departure', 'year' => 2027]);
-
-        $response = $this->get('/booking');
-
-        $response->assertOk();
-        $response->assertSee('<optgroup label="2027 Scheduled Departures">', false);
-        $response->assertSee('<optgroup label="2028 Scheduled Departures">', false);
-        $response->assertSee('<option value="China in winter (2027)">China in winter (2027)</option>', false);
-        $response->assertSee('Custom / Tailormade');
-        $response->assertDontSee('Hidden Draft Departure');
-    }
-
-    public function test_booking_bank_details_and_contact_links_follow_the_settings(): void
-    {
-        Setting::where('key', 'bank_gbp_account_number')->firstOrFail()->update(['value' => '99999999']);
         Setting::where('key', 'contact_email')->firstOrFail()->update(['value' => 'bookings@example.com']);
         Setting::where('key', 'whatsapp_primary_number')->firstOrFail()->update(['value' => '+441234567890']);
 
         $response = $this->get('/booking');
 
         $response->assertOk();
-        $response->assertSee('99999999');
         $response->assertSee('bookings@example.com');
         $response->assertSee('WhatsApp (+441234567890)');
         $response->assertSee('https://wa.me/441234567890', false);

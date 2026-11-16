@@ -1,0 +1,77 @@
+<?php
+
+namespace Tests\Feature;
+
+use App\Models\Tour;
+use Database\Seeders\DatabaseSeeder;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
+
+class TourDetailTest extends TestCase
+{
+    use RefreshDatabase;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->seed(DatabaseSeeder::class);
+    }
+
+    public function test_published_tour_detail_renders_successfully(): void
+    {
+        $tour = Tour::factory()->create([
+            'name' => 'Borneo Classic Birding',
+            'slug' => 'borneo-classic-birding-2027',
+            'country' => 'Malaysia',
+            'year' => 2027,
+            'date_label' => '10 - 24 Jul 2027',
+            'duration_days' => 15,
+            'price_gbp' => 4500,
+            'price_usd' => 5800,
+            'is_published' => true,
+            'summary' => 'Spectacular endemic birding in Sabah and Danum Valley.',
+            'itinerary' => "Day 1: Arrival in Kota Kinabalu\nDay 2-4: Mount Kinabalu\nDay 5-8: Danum Valley",
+        ]);
+
+        $response = $this->get(route('tours.show', $tour));
+
+        $response->assertOk();
+        $response->assertSee('Borneo Classic Birding');
+        $response->assertSee('Malaysia');
+        $response->assertSee('10 - 24 Jul 2027');
+        $response->assertSee('15 Days');
+        $response->assertSee('4,500');
+        $response->assertSee('5,800');
+        $response->assertSee('Danum Valley');
+        $response->assertSee('Enquire via WhatsApp');
+        $response->assertSee('Enquire via Email');
+    }
+
+    public function test_draft_tour_detail_returns_404(): void
+    {
+        $tour = Tour::factory()->draft()->create([
+            'slug' => 'secret-unannounced-tour',
+        ]);
+
+        $response = $this->get(route('tours.show', $tour));
+
+        $response->assertNotFound();
+    }
+
+    public function test_tour_card_on_tours_index_links_to_tour_detail(): void
+    {
+        $tour = Tour::factory()->create([
+            'name' => 'Himalayan Foothills Tour',
+            'slug' => 'himalayan-foothills-2027',
+            'year' => 2027,
+            'is_published' => true,
+        ]);
+
+        $response = $this->get(route('tours'));
+
+        $response->assertOk();
+        $response->assertSee(route('tours.show', $tour), false);
+        $response->assertSee('View Details &rarr;', false);
+    }
+}

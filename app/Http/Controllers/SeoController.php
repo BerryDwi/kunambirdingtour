@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Tour;
 use Illuminate\Http\Response;
 
 class SeoController extends Controller
@@ -21,6 +22,14 @@ class SeoController extends Controller
             ['url' => route('contact'), 'changefreq' => 'yearly', 'priority' => '0.6'],
             ['url' => route('terms'), 'changefreq' => 'yearly', 'priority' => '0.5'],
         ];
+
+        foreach (Tour::query()->published()->get() as $tour) {
+            $urls[] = [
+                'url' => route('tours.show', $tour),
+                'changefreq' => 'monthly',
+                'priority' => '0.8',
+            ];
+        }
 
         return response()
             ->view('seo.sitemap', ['urls' => $urls])

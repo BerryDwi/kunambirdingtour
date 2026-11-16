@@ -61,6 +61,30 @@ class TourController extends Controller
     }
 
     /**
+     * Display the detail page for a scheduled tour departure.
+     */
+    public function show(Tour $tour): View
+    {
+        abort_unless($tour->is_published, 404);
+
+        $relatedTours = Tour::query()
+            ->published()
+            ->where('id', '!=', $tour->id)
+            ->where(function ($query) use ($tour): void {
+                $query->where('year', $tour->year)
+                    ->orWhere('country', $tour->country);
+            })
+            ->ordered()
+            ->limit(3)
+            ->get();
+
+        return view('landing_page.tour_detail', [
+            'tour' => $tour,
+            'relatedTours' => $relatedTours,
+        ]);
+    }
+
+    /**
      * Load the active hero slides for a page.
      *
      * @return Collection<int, HeroSlide>

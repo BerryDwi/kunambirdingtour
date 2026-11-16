@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [TourController::class, 'home'])->name('home');
 Route::get('/tours', [TourController::class, 'tours'])->name('tours');
+Route::get('/tours/{tour:slug}', [TourController::class, 'show'])->name('tours.show');
 Route::get('/custom-tours', [CustomTourController::class, 'index'])->name('custom-tours');
 Route::permanentRedirect('/customtours', '/custom-tours');
 Route::get('/tour-reports', [ReportController::class, 'index'])->name('tour-reports');
