@@ -1,7 +1,7 @@
-# Frontend & Plan Perbaikan — Birdtour Asia
+# Frontend & Plan Perbaikan — Kunam Birding Tours
 
 > **Dokumen:** Rencana Perbaikan Frontend & Halaman Publik  
-> **Status:** 📋 Menunggu Persetujuan Pengguna  
+> **Status:** ✅ Selesai && Terverifikasi  
 
 ---
 
@@ -48,16 +48,22 @@
     - Spesifikasi tur: durasi hari, harga (GBP & USD), single supplement, ukuran grup.
     - Deskripsi & ringkasan tur.
     - Itinerary harian / detail jadwal perjalanan.
-    - Tombol kontak / enquiry langsung (WhatsApp & Email).
-    - Tautan ke itinerary eksternal jika ada.
+    - Tombol kontak / enquiry langsung (WhatsApp & Email); tanpa tautan itinerary eksternal.
   - Perbarui `resources/views/landing_page/partials/tour-card.blade.php` agar judul dan tombol mengarah ke `route('tours.show', $tour)`.
   - Daftarkan URL tour detail ke `sitemap.xml` di `SeoController.php`.
   - Buat feature test `tests/Feature/TourDetailTest.php` untuk memastikan routing, status 200/404, dan konten detail tur berfungsi dengan baik.
 
 ---
 
-## 4. Konfirmasi Eksekusi
+## 4. Status Eksekusi
 
-Sesuai instruksi Anda:
-- Perbaikan **belum dieksekusi**.
-- Pengerjaan baru akan dimulai satu per satu setelah Anda mengonfirmasi dan menyatakan bahwa seluruh plan sudah selesai.
+Seluruh item di atas sudah dieksekusi dan diverifikasi. Tindak lanjut pasca-review yang juga sudah diselesaikan:
+
+| Area | Hasil |
+|---|---|
+| Brand & logo | Logo lokal di header/offcanvas/admin + OG image; teks brand diseragamkan (entitas legal & email tetap). |
+| Halaman booking | Endpoint `POST /booking` dan kode matinya dihapus; `/confirm` dialihkan ke `/booking`. |
+| Settings home | Empat field HTML dijadikan plain text; link dibangun di template. |
+| Detail tour | `external_url` dihapus, konten itinerary dari DB, dan ukuran grup diambil dari kolom `group_size`. |
+
+Verifikasi terakhir: full suite PHPUnit hijau, Pint bersih, `view:cache` dan `npm run build` sukses, serta pengecekan HTTP pada halaman publik dan admin.
