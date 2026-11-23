@@ -24,7 +24,7 @@
             </div>
             <h4>{{ $settings['home_announcement_title'] ?? '' }}</h4>
             <p>
-                {!! $settings['home_announcement_body'] ?? '' !!}
+                {{ $settings['home_announcement_body'] ?? '' }}
             </p>
             <div class="mt-3">
                 <a href="{{ $settings['home_announcement_cta_url'] ?? route('tours') }}" class="btn btn-sm btn-primary py-1 px-3">{{ $settings['home_announcement_cta_label'] ?? 'View 2027 Departures' }} &rarr;</a>
@@ -46,9 +46,15 @@
                     <div class="birdtour-about-content lead text-secondary" style="font-size: 16.5px; line-height: 1.8;">
                         @foreach (preg_split('/\r\n\r\n|\n\n/', (string) ($settings['home_about_body'] ?? '')) as $paragraph)
                             <p class="{{ $loop->last ? 'mb-4' : 'mb-3' }}">
-                                {!! $paragraph !!}
+                                {{ $paragraph }}
                             </p>
                         @endforeach
+
+                        <div class="d-flex flex-wrap justify-content-center gap-2 mb-4">
+                            <a href="{{ route('tours') }}" class="btn btn-primary btn-sm px-4 py-2 rounded-pill fw-bold">View Tours</a>
+                            <a href="mailto:{{ $settings['contact_email'] ?? 'info@birdtourasia.com' }}?subject=Tour%20enquiry" class="btn btn-outline-primary btn-sm px-4 py-2 rounded-pill fw-bold">Email Us</a>
+                            <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $settings['whatsapp_primary_number'] ?? '60142234220') }}" target="_blank" rel="noopener" class="btn btn-outline-primary btn-sm px-4 py-2 rounded-pill fw-bold">WhatsApp</a>
+                        </div>
                     </div>
 
                     <!-- Award / Survey Highlight Box -->
@@ -60,7 +66,7 @@
                             <div>
                                 <h5 class="fw-bold mb-1" style="color: #172b40;">{{ $settings['home_award_title'] ?? '100% Survey Score & Top Ranked Operator' }}</h5>
                                 <p class="mb-0 text-muted" style="font-size: 14.5px; line-height: 1.6;">
-                                    {!! $settings['home_award_text'] ?? '' !!}
+                                    {{ $settings['home_award_text'] ?? '' }}
                                 </p>
                             </div>
                         </div>
@@ -83,7 +89,7 @@
                         <div>
                             <h5 class="fw-bold mb-1" style="color: #172b40;">{{ $settings['home_facebook_title'] ?? 'Latest news from the field' }}</h5>
                             <p class="mb-0 text-secondary" style="font-size: 14.5px;">
-                                {!! $settings['home_facebook_text'] ?? '' !!}
+                                {{ $settings['home_facebook_text'] ?? '' }}
                             </p>
                         </div>
                     </div>

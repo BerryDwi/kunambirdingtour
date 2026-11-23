@@ -60,6 +60,9 @@
 
                                 @if ($setting->type === 'text')
                                     <textarea id="setting-{{ $setting->id }}" name="values[{{ $setting->id }}]" rows="4" class="mt-1 block w-full rounded-lg border border-slate-300 px-3 py-2 text-sm text-slate-900 shadow-sm outline-none transition focus:border-brand-green focus:ring-2 focus:ring-brand-green/20">{{ old('values.'.$setting->id, $setting->value) }}</textarea>
+                                    @if (in_array($setting->key, ['home_announcement_body', 'home_about_body', 'home_award_text', 'home_facebook_text'], true))
+                                        <p class="mt-1 text-xs text-slate-500">Plain text only. Links and buttons are added by the page template.</p>
+                                    @endif
                                 @elseif ($setting->type === 'boolean')
                                     <div class="mt-2">
                                         <input type="hidden" name="values[{{ $setting->id }}]" value="0">

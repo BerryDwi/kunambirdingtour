@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\Product;
+use App\Models\Setting;
 use App\Models\Tour;
 use App\Models\TourReport;
 use Database\Seeders\DatabaseSeeder;
@@ -32,6 +33,21 @@ class TourTest extends TestCase
         $response->assertSee('Lesser Florican &amp; Western Himalaya', false);
         $response->assertSee('Leech Socks');
         $response->assertSee('Visit Facebook Page');
+    }
+
+    public function test_home_page_settings_are_plain_text_with_links_built_by_the_template(): void
+    {
+        Setting::where('key', 'contact_email')->firstOrFail()->update(['value' => 'tours@example.com']);
+        Setting::where('key', 'whatsapp_primary_number')->firstOrFail()->update(['value' => '+44 1234 567890']);
+
+        $response = $this->get('/');
+
+        $response->assertOk();
+        $response->assertDontSee('<strong>2027:</strong>', false);
+        $response->assertDontSee('class="fw-bold text-success text-decoration-none"', false);
+        $response->assertSee('mailto:tours@example.com', false);
+        $response->assertSee('https://wa.me/441234567890', false);
+        $response->assertSee(route('tours'), false);
     }
 
     public function test_home_page_hides_the_product_section_when_no_product_is_active(): void

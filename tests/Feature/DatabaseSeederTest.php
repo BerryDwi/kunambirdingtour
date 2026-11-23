@@ -45,10 +45,10 @@ class DatabaseSeederTest extends TestCase
             'is_published' => true,
         ]);
 
-        $this->assertStringContainsString(
-            'class="fw-bold text-success text-decoration-none"',
-            (string) Setting::where('key', 'home_about_body')->value('value'),
-        );
+        $aboutBody = (string) Setting::where('key', 'home_about_body')->value('value');
+
+        $this->assertStringContainsString('Kunam Birding Tours are the specialists in birding tours', $aboutBody);
+        $this->assertStringNotContainsString('<', $aboutBody);
     }
 
     public function test_default_seeding_creates_the_admin_without_an_inbox(): void
