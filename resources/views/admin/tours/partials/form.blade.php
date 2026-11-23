@@ -13,7 +13,7 @@
         2 => ['label' => 'Content', 'description' => 'Full description and day-by-day itinerary.'],
         3 => ['label' => 'Dates & pricing', 'description' => 'Departure dates, duration and prices.'],
         4 => ['label' => 'Media', 'description' => 'Upload a new image or use an external URL.'],
-        5 => ['label' => 'Publishing & SEO', 'description' => 'Visibility, external link and search metadata.'],
+        5 => ['label' => 'Publishing & SEO', 'description' => 'Visibility and search metadata.'],
     ];
 
     $stepFields = [
@@ -21,7 +21,7 @@
         2 => ['description', 'itinerary'],
         3 => ['duration_days', 'date_label', 'start_date', 'end_date', 'price_gbp', 'price_usd', 'single_supplement_gbp', 'single_supplement_usd'],
         4 => ['image', 'image_file', 'remove_image'],
-        5 => ['status', 'sort_order', 'external_url', 'is_featured', 'is_published', 'meta_title', 'meta_description'],
+        5 => ['status', 'sort_order', 'is_featured', 'is_published', 'meta_title', 'meta_description'],
     ];
 
     $errorSteps = [];
@@ -264,12 +264,6 @@
             <div class="sm:col-span-2">
                 <x-admin.form.field label="Status label (public badge)" name="status_label" hint="Optional. Leave blank to use the status label above.">
                     <input id="status_label" name="status_label" type="text" value="{{ old('status_label', $tour?->status_label) }}" placeholder="{{ $tour?->status?->label() ?? \App\Enums\TourStatus::Available->label() }}" class="{{ $inputClass }}">
-                </x-admin.form.field>
-            </div>
-
-            <div class="sm:col-span-2">
-                <x-admin.form.field label="External detail URL" name="external_url" hint="Optional link to an external itinerary page.">
-                    <input id="external_url" name="external_url" type="url" value="{{ old('external_url', $tour?->external_url) }}" placeholder="https://..." class="{{ $inputClass }}">
                 </x-admin.form.field>
             </div>
 

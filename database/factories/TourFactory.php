@@ -42,7 +42,6 @@ class TourFactory extends Factory
             'status' => TourStatus::Available,
             'status_label' => null,
             'image' => fake()->imageUrl(800, 600),
-            'external_url' => fake()->url(),
             'is_featured' => false,
             'is_published' => true,
             'sort_order' => fake()->numberBetween(0, 50),

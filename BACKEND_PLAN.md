@@ -213,7 +213,6 @@ Contoh key: `contact.email`, `contact.office_email`, `contact.whatsapp_1`, `cont
 | `single_supplement_usd` | integer, nullable | cents |
 | `status` | string, index | enum `TourStatus` |
 | `image` | string, nullable | path/URL |
-| `external_url` | string, nullable | link detail eksternal |
 | `is_featured` | boolean | tampil di home |
 | `is_published` | boolean, index | |
 | `sort_order` | integer | |

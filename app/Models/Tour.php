@@ -31,7 +31,6 @@ use Illuminate\Support\Str;
     'status',
     'status_label',
     'image',
-    'external_url',
     'is_featured',
     'is_published',
     'sort_order',

@@ -46,6 +46,22 @@ class TourDetailTest extends TestCase
         $response->assertSee('Danum Valley');
         $response->assertSee('Enquire via WhatsApp');
         $response->assertSee('Enquire via Email');
+        $response->assertDontSee('View Official Itinerary');
+        $response->assertDontSee('Full Itinerary Document');
+    }
+
+    public function test_seeded_tour_detail_renders_stored_itinerary_without_external_links(): void
+    {
+        $tour = Tour::query()->where('slug', 'china-in-winter-2027')->firstOrFail();
+
+        $response = $this->get(route('tours.show', $tour));
+
+        $response->assertOk();
+        $response->assertSee('Tour Itinerary');
+        $response->assertSee('Arrival into Beijing International Airport');
+        $response->assertDontSee('View Official Itinerary');
+        $response->assertDontSee('Full Itinerary Document');
+        $response->assertDontSee('birdtourasia.com/china');
     }
 
     public function test_draft_tour_detail_returns_404(): void

@@ -118,26 +118,6 @@
                         </div>
                     @endif
 
-                    @if ($tour->external_url)
-                        <!-- External PDF Itinerary Callout -->
-                        <div class="card border-0 shadow-sm rounded-3 p-4 mb-4" style="background-color: #fafcf9; border: 1px solid #e2ece0 !important;">
-                            <div class="d-flex flex-wrap align-items-center justify-content-between gap-3">
-                                <div class="d-flex align-items-center gap-3">
-                                    <div class="text-danger fs-1">
-                                        <i class="fas fa-file-pdf"></i>
-                                    </div>
-                                    <div>
-                                        <h5 class="fw-bold mb-1" style="color: #172b40;">Full Itinerary Document</h5>
-                                        <p class="text-muted small mb-0">View or download the official itinerary document for this tour.</p>
-                                    </div>
-                                </div>
-                                <a href="{{ $tour->external_url }}" target="_blank" rel="noopener" class="btn btn-outline-success px-4 py-2 fw-bold">
-                                    View Official Itinerary &rarr;
-                                </a>
-                            </div>
-                        </div>
-                    @endif
-
                     <!-- Related Tours -->
                     @if ($relatedTours->isNotEmpty())
                         <div class="mt-5 pt-3">

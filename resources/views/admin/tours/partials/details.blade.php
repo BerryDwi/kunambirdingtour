@@ -97,15 +97,6 @@
         </div>
     </dl>
 
-    @if ($tour->external_url)
-        <div>
-            <p class="text-[11px] font-semibold uppercase tracking-wider text-slate-400">External detail URL</p>
-            <a href="{{ $tour->external_url }}" target="_blank" rel="noopener noreferrer" class="mt-1 inline-block break-all text-sm font-medium text-brand-green underline-offset-2 hover:underline">
-                {{ $tour->external_url }}
-            </a>
-        </div>
-    @endif
-
     @if ($hasLongContent)
         <div class="space-y-4">
             @if (filled($tour->summary))

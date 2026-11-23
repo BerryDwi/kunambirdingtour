@@ -65,7 +65,6 @@ class TourRequest extends FormRequest
             'image' => ['nullable', 'string', 'max:2048'],
             'image_file' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:4096'],
             'remove_image' => ['sometimes', 'boolean'],
-            'external_url' => ['nullable', 'url', 'max:2048'],
             'is_featured' => ['boolean'],
             'is_published' => ['boolean'],
             'sort_order' => ['nullable', 'integer', 'min:0'],
