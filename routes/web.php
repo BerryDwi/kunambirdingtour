@@ -19,9 +19,8 @@ Route::get('/tour-reports', [ReportController::class, 'index'])->name('tour-repo
 Route::permanentRedirect('/tourreports', '/tour-reports');
 Route::get('/leaders', [LeaderController::class, 'index'])->name('leaders');
 Route::get('/booking', [BookingController::class, 'index'])->name('booking');
-Route::post('/booking', [BookingController::class, 'store'])->middleware('throttle:5,1')->name('booking.store');
 Route::permanentRedirect('/bookingform', '/booking');
-Route::get('/confirm', [BookingController::class, 'confirm'])->name('booking.confirm');
+Route::permanentRedirect('/confirm', '/booking');
 Route::get('/contact', [ContactController::class, 'index'])->name('contact');
 Route::get('/contactus', fn () => redirect('/contact', 301));
 Route::post('/contact', [ContactController::class, 'send'])->middleware('throttle:5,1')->name('contact.send');

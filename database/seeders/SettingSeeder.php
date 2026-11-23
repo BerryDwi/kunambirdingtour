@@ -99,7 +99,7 @@ class SettingSeeder extends Seeder
             ['key' => 'meta_description_tour_reports', 'value' => 'Read recent Kunam Birding Tours tour reports with trip highlights, species lists, and field dispatches from across Asia.', 'group' => 'seo', 'type' => 'text'],
             ['key' => 'meta_title_leaders', 'value' => 'Tour Leaders - Kunam Birding Tours', 'group' => 'seo'],
             ['key' => 'meta_description_leaders', 'value' => 'Meet the experienced Kunam Birding Tours tour leaders who guide our scheduled and custom birding tours across Asia.', 'group' => 'seo', 'type' => 'text'],
-            ['key' => 'meta_title_booking', 'value' => 'Booking with us & Flowchart - Kunam Birding Tours', 'group' => 'seo'],
+            ['key' => 'meta_title_booking', 'value' => 'Booking with us - Kunam Birding Tours', 'group' => 'seo'],
             ['key' => 'meta_description_booking', 'value' => 'Book a Kunam Birding Tours birding tour online, review payment details, and reserve your place with our team.', 'group' => 'seo', 'type' => 'text'],
             ['key' => 'meta_title_contact', 'value' => 'Contact us - Kunam Birding Tours', 'group' => 'seo'],
             ['key' => 'meta_description_contact', 'value' => 'Contact Kunam Birding Tours to ask about scheduled departures, custom birding tours, or your existing booking.', 'group' => 'seo', 'type' => 'text'],

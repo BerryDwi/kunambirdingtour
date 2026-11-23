@@ -407,7 +407,6 @@ app/
 │   ├── Middleware/EnsureUserIsAdmin.php       # Batch 1A ✅
 │   └── Requests/
 │       ├── Admin/LoginRequest.php            # Batch 1A ✅
-│       ├── StoreBookingRequest.php
 │       ├── StoreContactRequest.php
 │       ├── StoreTourRequest.php
 │       ├── UpdateTourRequest.php
@@ -605,6 +604,8 @@ Estimasi sisa MVP: **selesai** (Batch 1–5). Kesiapan deploy bersifat referensi
 - [x] Hapus hardcode konten dari Blade setelah semua halaman dinamis.
 
 ### Batch 4 — Form Booking & Contact (SELESAI)
+
+> **Catatan (23 Nov 2026):** endpoint publik `POST /booking`, `StoreBookingRequest`, action booking, dan mailable booking sudah dihapus karena form booking dikonversi menjadi halaman informasi + kontak langsung. Modul inbox booking di admin tetap dipertahankan.
 
 - [x] Form Request `StoreBookingRequest` dan `StoreContactRequest`.
 - [x] Action `CreateBooking`, `GenerateBookingReference`, `StoreContactMessage`.
@@ -1263,7 +1264,7 @@ Gunakan `RefreshDatabase`, factory, `Mail::fake()`, `Queue::fake()`, dan `Storag
 # migration & model
 php artisan make:model Tour -mf
 php artisan make:model Booking -mf
-php artisan make:request StoreBookingRequest
+php artisan make:request StoreContactRequest
 php artisan make:middleware EnsureUserIsAdmin
 php artisan make:mail BookingReceived
 

@@ -64,30 +64,6 @@
     <div class="section-padding" style="background-color: #ffffff;">
         <div class="container">
 
-            @if(session('booking_success'))
-                <!-- Flash Success Notification -->
-                <div class="alert alert-success alert-dismissible fade show p-4 rounded-4 shadow-sm mb-5 border-0" role="alert" style="background-color: #ecfdf5; border-left: 6px solid #087d50 !important;">
-                    <div class="d-flex align-items-start gap-3">
-                        <div class="text-success fs-1">
-                            <i class="fas fa-check-circle"></i>
-                        </div>
-                        <div>
-                            <h4 class="fw-bold text-success mb-1">Booking Inquiry Received!</h4>
-                            <p class="text-secondary mb-2" style="font-size: 15px;">
-                                Thank you, <strong>{{ session('booking_success')['full_name'] }}</strong>. We have received your booking request for <strong>{{ session('booking_success')['tour_name'] }}</strong>.
-                            </p>
-                            <div class="badge bg-success px-3 py-2 fs-6 mb-2">
-                                Reference Code: <strong>{{ session('booking_success')['reference_code'] }}</strong>
-                            </div>
-                            <p class="text-muted small mb-0">
-                                Our team will verify tour availability and follow up at <strong>{{ session('booking_success')['email'] }}</strong> within 24–48 hours with deposit transfer confirmation details.
-                            </p>
-                        </div>
-                    </div>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            @endif
-
             <!-- Section Intro -->
             <div class="row justify-content-center mb-5">
                 <div class="col-lg-10 text-center">
