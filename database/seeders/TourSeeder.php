@@ -11,22 +11,50 @@ class TourSeeder extends Seeder
 {
     /**
      * Seed the scheduled tours replicated from the public tours calendar.
+     *
+     * Existing tours are left alone so administrator edits survive a re-seed.
+     * Only empty content fields are backfilled from the source data.
      */
     public function run(): void
     {
         $content = $this->content();
 
         foreach ($this->tours() as $index => $tour) {
-            Tour::updateOrCreate(
-                ['slug' => $tour['slug']],
-                $tour + ($content[$tour['slug']] ?? []) + [
-                    'status_label' => $this->statusLabels()[$tour['slug']] ?? null,
-                    'is_featured' => false,
-                    'is_published' => true,
-                    'sort_order' => $index + 1,
-                ],
-            );
+            $slug = $tour['slug'];
+            $attributes = $tour + ($content[$slug] ?? []) + [
+                'status_label' => $this->statusLabels()[$slug] ?? null,
+                'is_featured' => false,
+                'is_published' => true,
+                'sort_order' => $index + 1,
+            ];
+
+            $seededTour = Tour::query()->withTrashed()->firstOrCreate(['slug' => $slug], $attributes);
+
+            $missingContent = $this->missingContent($seededTour, $content[$slug] ?? []);
+
+            if ($missingContent !== []) {
+                $seededTour->update($missingContent);
+            }
         }
+    }
+
+    /**
+     * Content that is present in the seed data but still empty on the tour.
+     *
+     * @param  array<string, mixed>  $content
+     * @return array<string, mixed>
+     */
+    private function missingContent(Tour $tour, array $content): array
+    {
+        $missing = [];
+
+        foreach (['description', 'itinerary', 'group_size'] as $field) {
+            if (blank($tour->{$field}) && filled($content[$field] ?? null)) {
+                $missing[$field] = $content[$field];
+            }
+        }
+
+        return $missing;
     }
 
     /**
