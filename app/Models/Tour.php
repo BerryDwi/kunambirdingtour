@@ -21,6 +21,7 @@ use Illuminate\Support\Str;
     'description',
     'itinerary',
     'duration_days',
+    'group_size',
     'date_label',
     'start_date',
     'end_date',

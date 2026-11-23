@@ -30,9 +30,9 @@ class TourSeeder extends Seeder
     }
 
     /**
-     * Placeholder descriptions and itineraries copied from the previous public tour pages.
+     * Placeholder descriptions, itineraries and group sizes copied from the previous public tour pages.
      *
-     * @return array<string, array{description: string|null, itinerary: string|null}>
+     * @return array<string, array{description: string|null, itinerary: string|null, group_size: string|null}>
      */
     private function content(): array
     {

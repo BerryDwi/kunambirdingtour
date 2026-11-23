@@ -204,6 +204,7 @@ Contoh key: `contact.email`, `contact.office_email`, `contact.whatsapp_1`, `cont
 | `description` | longText, nullable | deskripsi lengkap |
 | `itinerary` | longText, nullable | markdown |
 | `duration_days` | integer, nullable | durasi |
+| `group_size` | string, nullable | maksimal peserta (mis. `8`, `7-8`); fallback `6–8` |
 | `date_label` | string, nullable | teks tanggal fleksibel (mendukung 2 rentang) |
 | `start_date` | date, nullable | untuk sorting/filter |
 | `end_date` | date, nullable | |

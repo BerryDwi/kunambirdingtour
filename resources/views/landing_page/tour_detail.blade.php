@@ -59,7 +59,7 @@
                             </div>
                             <div class="col-sm-6 col-md-3">
                                 <div class="text-muted small">Group Size</div>
-                                <div class="fw-bold text-dark mt-1">Max 6&ndash;8 Birders</div>
+                                <div class="fw-bold text-dark mt-1">Max {{ $tour->group_size ?: '6–8' }} Birders</div>
                             </div>
                             <div class="col-sm-6 col-md-3">
                                 <div class="text-muted small">Status</div>
@@ -88,7 +88,7 @@
                         @if ($tour->description)
                             <div class="text-secondary" style="font-size: 15.5px; line-height: 1.8;">
                                 @foreach (preg_split('/\r\n\r\n|\n\n/', (string) $tour->description) as $paragraph)
-                                    <p class="{{ $loop->last ? 'mb-0' : 'mb-3' }}">{!! $paragraph !!}</p>
+                                    <p class="{{ $loop->last ? 'mb-0' : 'mb-3' }}">{{ $paragraph }}</p>
                                 @endforeach
                             </div>
                         @else
@@ -109,7 +109,7 @@
                                     @if (trim($line) !== '')
                                         <div class="p-3 rounded-3 border" style="background-color: #fafcf9;">
                                             <p class="text-secondary mb-0" style="font-size: 15px; line-height: 1.6;">
-                                                {!! $line !!}
+                                                {{ $line }}
                                             </p>
                                         </div>
                                     @endif

@@ -98,6 +98,7 @@ class TourManagementTest extends TestCase
                 'country' => 'China',
                 'summary' => 'Winter birding across central China.',
                 'duration_days' => 20,
+                'group_size' => '7-8',
                 'status' => TourStatus::Available->value,
                 'status_label' => 'Only two places left',
                 'price_gbp' => '3495.00',
@@ -112,6 +113,7 @@ class TourManagementTest extends TestCase
 
         $this->assertSame(349500, $tour->price_gbp);
         $this->assertSame(429500, $tour->price_usd);
+        $this->assertSame('7-8', $tour->group_size);
         $this->assertTrue($tour->is_published);
         $this->assertSame('Only two places left', $tour->statusLabel());
 

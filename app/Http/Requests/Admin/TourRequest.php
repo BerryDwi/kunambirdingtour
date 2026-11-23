@@ -53,6 +53,7 @@ class TourRequest extends FormRequest
             'description' => ['nullable', 'string'],
             'itinerary' => ['nullable', 'string'],
             'duration_days' => ['nullable', 'integer', 'min:1', 'max:365'],
+            'group_size' => ['nullable', 'string', 'max:20'],
             'date_label' => ['nullable', 'string', 'max:255'],
             'start_date' => ['nullable', 'date'],
             'end_date' => ['nullable', 'date', 'after_or_equal:start_date'],

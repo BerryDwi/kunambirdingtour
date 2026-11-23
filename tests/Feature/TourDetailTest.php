@@ -59,9 +59,38 @@ class TourDetailTest extends TestCase
         $response->assertOk();
         $response->assertSee('Tour Itinerary');
         $response->assertSee('Arrival into Beijing International Airport');
+        $response->assertSee('Max 8 Birders');
         $response->assertDontSee('View Official Itinerary');
         $response->assertDontSee('Full Itinerary Document');
         $response->assertDontSee('birdtourasia.com/china');
+    }
+
+    public function test_tour_detail_uses_the_default_group_size_when_none_is_stored(): void
+    {
+        $tour = Tour::factory()->create([
+            'group_size' => null,
+            'is_published' => true,
+        ]);
+
+        $this->get(route('tours.show', $tour))
+            ->assertOk()
+            ->assertSee('Max 6–8 Birders');
+    }
+
+    public function test_tour_detail_escapes_stored_description_and_itinerary(): void
+    {
+        $tour = Tour::factory()->create([
+            'description' => '<script>alert(1)</script>',
+            'itinerary' => "Day 1: <b>Bold</b> start\nDay 2: Plain day",
+            'is_published' => true,
+        ]);
+
+        $this->get(route('tours.show', $tour))
+            ->assertOk()
+            ->assertDontSee('<script>alert(1)</script>', false)
+            ->assertDontSee('<b>Bold</b>', false)
+            ->assertSee('&lt;script&gt;alert(1)&lt;/script&gt;', false)
+            ->assertSee('Day 2: Plain day');
     }
 
     public function test_draft_tour_detail_returns_404(): void

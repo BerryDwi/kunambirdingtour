@@ -19,7 +19,7 @@
     $stepFields = [
         1 => ['name', 'slug', 'year', 'country', 'summary'],
         2 => ['description', 'itinerary'],
-        3 => ['duration_days', 'date_label', 'start_date', 'end_date', 'price_gbp', 'price_usd', 'single_supplement_gbp', 'single_supplement_usd'],
+        3 => ['duration_days', 'group_size', 'date_label', 'start_date', 'end_date', 'price_gbp', 'price_usd', 'single_supplement_gbp', 'single_supplement_usd'],
         4 => ['image', 'image_file', 'remove_image'],
         5 => ['status', 'sort_order', 'is_featured', 'is_published', 'meta_title', 'meta_description'],
     ];
@@ -168,6 +168,10 @@
         <div class="grid gap-4 sm:grid-cols-2">
             <x-admin.form.field label="Duration (days)" name="duration_days">
                 <input id="duration_days" name="duration_days" type="number" min="1" max="365" value="{{ old('duration_days', $tour?->duration_days) }}" class="{{ $inputClass }}">
+            </x-admin.form.field>
+
+            <x-admin.form.field label="Group size" name="group_size" hint="Maximum number of birders, e.g. 8 or 7-8. Leave blank to show the default.">
+                <input id="group_size" name="group_size" type="text" value="{{ old('group_size', $tour?->group_size) }}" class="{{ $inputClass }}">
             </x-admin.form.field>
 
             <x-admin.form.field label="Date label" name="date_label" hint="Flexible text, e.g. 10th - 29th January 2027 (20 days).">

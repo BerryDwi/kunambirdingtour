@@ -52,6 +52,11 @@
         </div>
 
         <div>
+            <dt class="text-[11px] font-semibold uppercase tracking-wider text-slate-400">Group size</dt>
+            <dd class="mt-0.5 text-sm font-medium text-slate-700">{{ $tour->group_size ?: 'Default (6-8)' }}</dd>
+        </div>
+
+        <div>
             <dt class="text-[11px] font-semibold uppercase tracking-wider text-slate-400">Start date</dt>
             <dd class="mt-0.5 text-sm font-medium text-slate-700">{{ $tour->start_date?->format('d M Y') ?? '—' }}</dd>
         </div>

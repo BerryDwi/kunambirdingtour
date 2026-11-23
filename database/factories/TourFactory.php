@@ -32,6 +32,7 @@ class TourFactory extends Factory
             'description' => fake()->paragraphs(3, true),
             'itinerary' => fake()->paragraphs(4, true),
             'duration_days' => fake()->numberBetween(5, 25),
+            'group_size' => (string) fake()->numberBetween(6, 10),
             'date_label' => fake()->words(5, true),
             'start_date' => $startDate,
             'end_date' => $endDate,
