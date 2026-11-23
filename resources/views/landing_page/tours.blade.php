@@ -1,7 +1,7 @@
 @extends('layouts.template')
 
-@section('title', $settings['meta_title_tours'] ?? 'Scheduled Tours Calendar - Birdtour Asia')
-@section('meta_description', $settings['meta_description_tours'] ?? 'Browse Birdtour Asia scheduled birding tours for 2027 and 2028, with small groups and expert leaders across Asia.')
+@section('title', $settings['meta_title_tours'] ?? 'Scheduled Tours Calendar - Kunam Birding Tours')
+@section('meta_description', $settings['meta_description_tours'] ?? 'Browse Kunam Birding Tours scheduled birding tours for 2027 and 2028, with small groups and expert leaders across Asia.')
 
 @section('content')
     <!-- Meeta Page Banner -->

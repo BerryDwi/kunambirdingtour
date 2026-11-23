@@ -1,7 +1,7 @@
 @extends('layouts.template')
 
-@section('title', $settings['meta_title_tour_reports'] ?? 'Tour Reports - Birdtour Asia')
-@section('meta_description', $settings['meta_description_tour_reports'] ?? 'Read recent Birdtour Asia tour reports with trip highlights, species lists, and field dispatches from across Asia.')
+@section('title', $settings['meta_title_tour_reports'] ?? 'Tour Reports - Kunam Birding Tours')
+@section('meta_description', $settings['meta_description_tour_reports'] ?? 'Read recent Kunam Birding Tours tour reports with trip highlights, species lists, and field dispatches from across Asia.')
 
 @section('content')
     <!-- Meeta Hero Slider for Tour Reports -->

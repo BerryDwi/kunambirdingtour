@@ -14,7 +14,7 @@
             <p style="margin-top: 0;">Dear {{ $contactMessage->first_name }},</p>
 
             <p>
-                Thank you for contacting Birdtour Asia. Your message has been received and a member of
+                Thank you for contacting Kunam Birding Tours. Your message has been received and a member of
                 our team will reply as soon as possible.
             </p>
 
@@ -28,7 +28,7 @@
 
             <p style="margin-bottom: 0;">
                 Kind regards,<br>
-                <strong>Birdtour Asia</strong><br>
+                <strong>Kunam Birding Tours</strong><br>
                 <a href="mailto:{{ \App\Models\Setting::officeEmail() }}" style="color: #087d50;">{{ \App\Models\Setting::officeEmail() }}</a>
             </p>
         </div>

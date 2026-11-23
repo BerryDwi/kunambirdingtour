@@ -1,7 +1,7 @@
 @extends('layouts.template')
 
-@section('title', ($tour->meta_title ?: $tour->name) . ' - Birdtour Asia')
-@section('meta_description', $tour->meta_description ?: ($tour->summary ?: 'Birding tour to ' . ($tour->country ?? 'Asia') . ' with Birdtour Asia.'))
+@section('title', ($tour->meta_title ?: $tour->name) . ' - Kunam Birding Tours')
+@section('meta_description', $tour->meta_description ?: ($tour->summary ?: 'Birding tour to ' . ($tour->country ?? 'Asia') . ' with Kunam Birding Tours.'))
 
 @section('content')
     <!-- Page Banner Section -->
@@ -93,7 +93,7 @@
                             </div>
                         @else
                             <p class="text-secondary mb-0" style="font-size: 15.5px; line-height: 1.8;">
-                                Birdtour Asia specializes in Asian birdwatching tours. This {{ $tour->name }} departure offers premier birding opportunities with strictly limited small groups and experienced leaders.
+                                Kunam Birding Tours specializes in Asian birdwatching tours. This {{ $tour->name }} departure offers premier birding opportunities with strictly limited small groups and experienced leaders.
                             </p>
                         @endif
                     </div>
@@ -177,7 +177,7 @@
 
                             @php
                                 $tourEnquirySubject = rawurlencode('Booking Enquiry: ' . $tour->name . ' (' . $tour->date_label . ')');
-                                $whatsappMessage = rawurlencode('Hello Birdtour Asia, I am interested in reserving a place on: ' . $tour->name . ' (' . $tour->date_label . '). Please advise on space availability.');
+                                $whatsappMessage = rawurlencode('Hello Kunam Birding Tours, I am interested in reserving a place on: ' . $tour->name . ' (' . $tour->date_label . '). Please advise on space availability.');
                             @endphp
 
                             <!-- WhatsApp Inquiry Button -->

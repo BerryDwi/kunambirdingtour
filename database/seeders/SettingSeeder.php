@@ -33,7 +33,7 @@ class SettingSeeder extends Seeder
     {
         return [
             // General
-            ['key' => 'site_name', 'value' => 'Birdtour Asia', 'group' => 'general'],
+            ['key' => 'site_name', 'value' => 'Kunam Birding Tours', 'group' => 'general'],
             ['key' => 'site_tagline', 'value' => 'Specialists in Asian Birding Tours', 'group' => 'general'],
             ['key' => 'site_description', 'value' => 'Specialists in Asian birding tours, we offer the best in organised and tailor-made tours throughout the continent, from the Middle-east to New Guinea.', 'group' => 'general', 'type' => 'text'],
             ['key' => 'company_name', 'value' => 'Birdtour Asia Limited', 'group' => 'general'],
@@ -75,9 +75,9 @@ class SettingSeeder extends Seeder
             ['key' => 'home_announcement_cta_url', 'value' => '/tours', 'group' => 'home'],
             ['key' => 'home_about_title', 'value' => 'Specialists in Asian Birding Tours', 'group' => 'home'],
             ['key' => 'home_about_body', 'value' => implode("\n\n", [
-                '<strong>Birdtour Asia</strong> are the specialists in birding tours, offering the best in organised and tailor-made custom tours throughout the region for 20 years. We offer you the best possible bird-tour experience through a combination of the most experienced and knowledgeable leaders in the region, small group sizes, a friendly and relaxed atmosphere, and of course some of the finest birding in the world.',
+                '<strong>Kunam Birding Tours</strong> are the specialists in birding tours, offering the best in organised and tailor-made custom tours throughout the region for 20 years. We offer you the best possible bird-tour experience through a combination of the most experienced and knowledgeable leaders in the region, small group sizes, a friendly and relaxed atmosphere, and of course some of the finest birding in the world.',
                 'Our tours cover a huge swathe from Saudi Arabia and Socotra in the west, to the Kamchatka coastline in the north, and as far east as West Papua in New Guinea. We carefully plan each tour to optimise the birding opportunities at each site visited, concentrating on the most enigmatic, localised and hard to find species. By allowing time for comprehensive coverage we will give ourselves the best realistic chance of locating these speciality birds of the region.',
-                'Our scheduled tours are equalled in popularity by our custom tours, with itineraries designed with the intimate knowledge of our Birdtour Asia team to match your needs for any bird targets, mammals, culture or cuisine.',
+                'Our scheduled tours are equalled in popularity by our custom tours, with itineraries designed with the intimate knowledge of our Kunam Birding Tours team to match your needs for any bird targets, mammals, culture or cuisine.',
                 'Please visit our <a href="/tours" class="fw-bold text-success text-decoration-none">tours page</a> for our 2026-2028 scheduled departures or contact us via <a href="mailto:info@birdtourasia.com?subject=Tour%20enquiry" class="fw-bold text-success text-decoration-none">e-mail</a> or <a href="tel:+60142234220" class="fw-bold text-success text-decoration-none">WhatsApp</a> if you would like us to organise one of our popular custom tours. Our 2029 tour calendar will be published in December 2026.',
             ]), 'group' => 'home', 'type' => 'text'],
             ['key' => 'home_award_title', 'value' => '100% Survey Score & Top Ranked Operator', 'group' => 'home'],
@@ -88,23 +88,23 @@ class SettingSeeder extends Seeder
             ['key' => 'home_reports_subtitle', 'value' => 'Explore recent trip highlights, species lists, and dispatches from across Asia', 'group' => 'home'],
 
             // SEO
-            ['key' => 'meta_title', 'value' => 'Birdtour Asia: birding tours throughout the continent', 'group' => 'seo'],
+            ['key' => 'meta_title', 'value' => 'Kunam Birding Tours: birding tours throughout the continent', 'group' => 'seo'],
             ['key' => 'meta_description', 'value' => 'Specialists in Asian birding tours, we offer the best in organised and tailor-made tours throughout the continent, from the Middle-east to New Guinea.', 'group' => 'seo', 'type' => 'text'],
-            ['key' => 'meta_image', 'value' => 'https://cdn.prod.website-files.com/5df5bf90b0ebe7d8cd4333fb/5e8c523028289f697f322d6e_Birdtour-Asia-CMYK-logo.png', 'group' => 'seo'],
-            ['key' => 'meta_title_tours', 'value' => 'Scheduled Tours Calendar - Birdtour Asia', 'group' => 'seo'],
-            ['key' => 'meta_description_tours', 'value' => 'Browse Birdtour Asia scheduled birding tours for 2027 and 2028, with small groups and expert leaders across Asia.', 'group' => 'seo', 'type' => 'text'],
-            ['key' => 'meta_title_custom_tours', 'value' => 'Custom tours - Birdtour Asia', 'group' => 'seo'],
-            ['key' => 'meta_description_custom_tours', 'value' => 'Design a tailor-made birding tour with Birdtour Asia, built around your target species, dates, and travel style.', 'group' => 'seo', 'type' => 'text'],
-            ['key' => 'meta_title_tour_reports', 'value' => 'Tour Reports - Birdtour Asia', 'group' => 'seo'],
-            ['key' => 'meta_description_tour_reports', 'value' => 'Read recent Birdtour Asia tour reports with trip highlights, species lists, and field dispatches from across Asia.', 'group' => 'seo', 'type' => 'text'],
-            ['key' => 'meta_title_leaders', 'value' => 'Tour Leaders - Birdtour Asia', 'group' => 'seo'],
-            ['key' => 'meta_description_leaders', 'value' => 'Meet the experienced Birdtour Asia tour leaders who guide our scheduled and custom birding tours across Asia.', 'group' => 'seo', 'type' => 'text'],
-            ['key' => 'meta_title_booking', 'value' => 'Booking with us & Flowchart - Birdtour Asia', 'group' => 'seo'],
-            ['key' => 'meta_description_booking', 'value' => 'Book a Birdtour Asia birding tour online, review payment details, and reserve your place with our team.', 'group' => 'seo', 'type' => 'text'],
-            ['key' => 'meta_title_contact', 'value' => 'Contact us - Birdtour Asia', 'group' => 'seo'],
-            ['key' => 'meta_description_contact', 'value' => 'Contact Birdtour Asia to ask about scheduled departures, custom birding tours, or your existing booking.', 'group' => 'seo', 'type' => 'text'],
-            ['key' => 'meta_title_terms', 'value' => 'Terms and Conditions - Birdtour Asia', 'group' => 'seo'],
-            ['key' => 'meta_description_terms', 'value' => 'Birdtour Asia booking terms and conditions, including payments, cancellations, insurance, and travel arrangements.', 'group' => 'seo', 'type' => 'text'],
+            ['key' => 'meta_image', 'value' => '', 'group' => 'seo'],
+            ['key' => 'meta_title_tours', 'value' => 'Scheduled Tours Calendar - Kunam Birding Tours', 'group' => 'seo'],
+            ['key' => 'meta_description_tours', 'value' => 'Browse Kunam Birding Tours scheduled birding tours for 2027 and 2028, with small groups and expert leaders across Asia.', 'group' => 'seo', 'type' => 'text'],
+            ['key' => 'meta_title_custom_tours', 'value' => 'Custom tours - Kunam Birding Tours', 'group' => 'seo'],
+            ['key' => 'meta_description_custom_tours', 'value' => 'Design a tailor-made birding tour with Kunam Birding Tours, built around your target species, dates, and travel style.', 'group' => 'seo', 'type' => 'text'],
+            ['key' => 'meta_title_tour_reports', 'value' => 'Tour Reports - Kunam Birding Tours', 'group' => 'seo'],
+            ['key' => 'meta_description_tour_reports', 'value' => 'Read recent Kunam Birding Tours tour reports with trip highlights, species lists, and field dispatches from across Asia.', 'group' => 'seo', 'type' => 'text'],
+            ['key' => 'meta_title_leaders', 'value' => 'Tour Leaders - Kunam Birding Tours', 'group' => 'seo'],
+            ['key' => 'meta_description_leaders', 'value' => 'Meet the experienced Kunam Birding Tours tour leaders who guide our scheduled and custom birding tours across Asia.', 'group' => 'seo', 'type' => 'text'],
+            ['key' => 'meta_title_booking', 'value' => 'Booking with us & Flowchart - Kunam Birding Tours', 'group' => 'seo'],
+            ['key' => 'meta_description_booking', 'value' => 'Book a Kunam Birding Tours birding tour online, review payment details, and reserve your place with our team.', 'group' => 'seo', 'type' => 'text'],
+            ['key' => 'meta_title_contact', 'value' => 'Contact us - Kunam Birding Tours', 'group' => 'seo'],
+            ['key' => 'meta_description_contact', 'value' => 'Contact Kunam Birding Tours to ask about scheduled departures, custom birding tours, or your existing booking.', 'group' => 'seo', 'type' => 'text'],
+            ['key' => 'meta_title_terms', 'value' => 'Terms and Conditions - Kunam Birding Tours', 'group' => 'seo'],
+            ['key' => 'meta_description_terms', 'value' => 'Kunam Birding Tours booking terms and conditions, including payments, cancellations, insurance, and travel arrangements.', 'group' => 'seo', 'type' => 'text'],
         ];
     }
 }

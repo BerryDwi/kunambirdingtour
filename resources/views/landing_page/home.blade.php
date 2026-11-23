@@ -1,12 +1,12 @@
 @extends('layouts.template')
 
-@section('title', $settings['meta_title'] ?? 'Birdtour Asia: birding tours throughout the continent')
+@section('title', $settings['meta_title'] ?? 'Kunam Birding Tours: birding tours throughout the continent')
 @section('meta_description', $settings['meta_description'] ?? 'Specialists in Asian birding tours, we offer the best in organised and tailor-made tours throughout the continent, from the Middle-east to New Guinea.')
 
 @section('content')
     <!-- Meeta Hero Slider Section -->
     <div class="meeta-hero-section position-relative">
-        <div class="meeta-hero-slider swiper" aria-label="Birdtour Asia Hero Slider">
+        <div class="meeta-hero-slider swiper" aria-label="Kunam Birding Tours Hero Slider">
             <div class="swiper-wrapper">
                 @foreach ($slides as $slide)
                     <div class="swiper-slide meeta-hero-slide">
@@ -16,7 +16,7 @@
             </div>
         </div>
 
-        <!-- Floating Announcement Overlay (Matching Birdtour Asia Latest News Banner) -->
+        <!-- Floating Announcement Overlay (Matching Kunam Birding Tours Latest News Banner) -->
         <div class="bta-announcement-overlay">
             <div class="d-flex align-items-center gap-2 mb-2">
                 <span class="badge bg-success text-uppercase px-2 py-1" style="font-size: 11px; letter-spacing: 0.5px;">{{ $settings['home_announcement_badge'] ?? 'Field Update' }}</span>

@@ -54,7 +54,7 @@ class LeaderSeeder extends Seeder
                 'slug' => 'bob-natural',
                 'region' => 'Office Manager',
                 'badge_style' => 'info',
-                'bio' => "Bob grew up on the island of Masbate in the Bicol Region of the Philippines where he first developed a fascination for the natural world. After earning his degree in Biology at Bicol University he spent several years working with environmental NGOs in the country, contributing to biodiversity conservation on Mindoro and the Polillo Islands.\n\nIn recent years he has continued his work as a wildlife biologist focusing on migratory shorebirds and Philippine endemics. These days he lives in Batangas from where he works remotely to manage the Birdtour Asia office - he will frequently be your first point of contact with us, and help with any questions you have regarding any aspect of our tours.",
+                'bio' => "Bob grew up on the island of Masbate in the Bicol Region of the Philippines where he first developed a fascination for the natural world. After earning his degree in Biology at Bicol University he spent several years working with environmental NGOs in the country, contributing to biodiversity conservation on Mindoro and the Polillo Islands.\n\nIn recent years he has continued his work as a wildlife biologist focusing on migratory shorebirds and Philippine endemics. These days he lives in Batangas from where he works remotely to manage the Kunam Birding Tours office - he will frequently be your first point of contact with us, and help with any questions you have regarding any aspect of our tours.",
                 'photo' => $cdn.'69c63d2fa5f7b7fa4d98d5eb_Bob%20Natural.avif',
                 'email' => 'office@birdtourasia.com',
             ],
@@ -71,7 +71,7 @@ class LeaderSeeder extends Seeder
                 'slug' => 'mike-nelson',
                 'region' => 'Throughout the region',
                 'badge_style' => 'success',
-                'bio' => 'Mike has been a birder since he was six, when he became fascinated with the birds in his English garden. Having lived in and travelled to over 40 countries, he is an experienced world birder and an avid sound recordist who has logged over 12,000 sound recordings. Working as a full-time guide for Birdtour Asia was a natural progression to share his knowledge and enthusiasm on tours throughout our region.',
+                'bio' => 'Mike has been a birder since he was six, when he became fascinated with the birds in his English garden. Having lived in and travelled to over 40 countries, he is an experienced world birder and an avid sound recordist who has logged over 12,000 sound recordings. Working as a full-time guide for Kunam Birding Tours was a natural progression to share his knowledge and enthusiasm on tours throughout our region.',
                 'photo' => $cdn.'5e8bf171999957f708b325c8_Mike%20Nelson.avif',
             ],
             [
@@ -119,7 +119,7 @@ class LeaderSeeder extends Seeder
                 'slug' => 'sumaraja',
                 'region' => 'Indonesia',
                 'badge_style' => 'success',
-                'bio' => "'Raja is a much loved face on all of our Sumatra, Java, Lesser Sundas and Banda Sea tours. He has co-led over 60 tours with us since 2007. Prior to guiding for Birdtour Asia, he was Ben King's right-hand man, including successfully finding Wetar Ground Dove way back in 2008.",
+                'bio' => "'Raja is a much loved face on all of our Sumatra, Java, Lesser Sundas and Banda Sea tours. He has co-led over 60 tours with us since 2007. Prior to guiding for Kunam Birding Tours, he was Ben King's right-hand man, including successfully finding Wetar Ground Dove way back in 2008.",
                 'photo' => $cdn.'6336d4c59532fce156f69e65_Sumaraja.avif',
             ],
             [
@@ -143,7 +143,7 @@ class LeaderSeeder extends Seeder
                 'slug' => 'martin-kennewell',
                 'region' => 'Eastern Palaearctic',
                 'badge_style' => 'success',
-                'bio' => 'Martin has amassed well over 8,000 species worldwide. Based in Asia for over 20 years, mostly in Singapore, he leads Birdtour Asia tours with a focus on the Eastern Palearctic including the Middle East, Mongolia, China and Japan.',
+                'bio' => 'Martin has amassed well over 8,000 species worldwide. Based in Asia for over 20 years, mostly in Singapore, he leads Kunam Birding Tours tours with a focus on the Eastern Palearctic including the Middle East, Mongolia, China and Japan.',
                 'photo' => $cdn.'649596bac7f17d4112688d44_Martin.avif',
             ],
             [

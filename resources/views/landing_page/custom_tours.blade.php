@@ -1,7 +1,7 @@
 @extends('layouts.template')
 
-@section('title', $settings['meta_title_custom_tours'] ?? 'Custom tours - Birdtour Asia')
-@section('meta_description', $settings['meta_description_custom_tours'] ?? 'Design a tailor-made birding tour with Birdtour Asia, built around your target species, dates, and travel style.')
+@section('title', $settings['meta_title_custom_tours'] ?? 'Custom tours - Kunam Birding Tours')
+@section('meta_description', $settings['meta_description_custom_tours'] ?? 'Design a tailor-made birding tour with Kunam Birding Tours, built around your target species, dates, and travel style.')
 
 @section('content')
     <!-- Meeta Hero Slider for Custom Tours (Matching Reference custom-slider) -->
@@ -107,7 +107,7 @@
                             style="border: 1px solid #e2ece0 !important;">
                             <div class="ratio ratio-16x9" style="min-height: 550px;">
                                 <iframe src="https://www.google.com/maps/d/embed?mid=10uk_1wHhHBosIlnUn81u8kgeqUI"
-                                    title="Birdtour Asia Custom Tours Interactive Map" style="border: 0;" allowfullscreen=""
+                                    title="Kunam Birding Tours Custom Tours Interactive Map" style="border: 0;" allowfullscreen=""
                                     loading="lazy"></iframe>
                             </div>
                         </div>

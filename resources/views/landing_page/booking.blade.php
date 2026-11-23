@@ -1,7 +1,7 @@
 @extends('layouts.template')
 
-@section('title', $settings['meta_title_booking'] ?? 'Booking with us - Birdtour Asia')
-@section('meta_description', $settings['meta_description_booking'] ?? 'Book a Birdtour Asia birding tour online, review reservation policies, and reserve your place with our team.')
+@section('title', $settings['meta_title_booking'] ?? 'Booking with us - Kunam Birding Tours')
+@section('meta_description', $settings['meta_description_booking'] ?? 'Book a Kunam Birding Tours birding tour online, review reservation policies, and reserve your place with our team.')
 
 @push('styles')
 <style>
@@ -31,7 +31,7 @@
 @section('content')
     <!-- Meeta Hero Slider for Booking Section -->
     <div class="meeta-hero-section position-relative">
-        <div class="meeta-hero-slider swiper" aria-label="Birdtour Asia Booking Slider">
+        <div class="meeta-hero-slider swiper" aria-label="Kunam Birding Tours Booking Slider">
             <div class="swiper-wrapper">
                 @foreach ($slides as $slide)
                     <div class="swiper-slide meeta-hero-slide">
@@ -47,7 +47,7 @@
                 <span class="badge bg-success text-uppercase px-2 py-1" style="font-size: 11px; letter-spacing: 0.5px;">Reservations &amp; Booking</span>
                 <span class="text-white-50 small">2027 &ndash; 2028 Tours</span>
             </div>
-            <h4>Booking with Birdtour Asia</h4>
+            <h4>Booking with Kunam Birding Tours</h4>
             <p>
                 A clear, simple, and transparent booking process for both our scheduled departures and tailor-made custom tours.
             </p>
@@ -93,11 +93,11 @@
                 <div class="col-lg-10 text-center">
                     <div class="section-title text-center mb-4">
                         <span class="badge bg-success-subtle text-success text-uppercase fw-bold px-3 py-2 mb-2 rounded-pill">How It Works</span>
-                        <h2 class="main-title fw-bold" style="color: #172b40; font-size: 34px;">Booking with Birdtour Asia</h2>
+                        <h2 class="main-title fw-bold" style="color: #172b40; font-size: 34px;">Booking with Kunam Birding Tours</h2>
                         <div class="mx-auto mt-2" style="width: 60px; height: 3px; background-color: #087d50; border-radius: 2px;"></div>
                     </div>
                     <p class="lead text-secondary" style="font-size: 16.5px; line-height: 1.8;">
-                        Booking with <strong>Birdtour Asia</strong> could not be simpler. Whether you are reserving a seat on one of our strictly limited small-group scheduled tours or collaborating on an exclusive tailor-made custom adventure, contact our team to verify availability and hold your place.
+                        Booking with <strong>Kunam Birding Tours</strong> could not be simpler. Whether you are reserving a seat on one of our strictly limited small-group scheduled tours or collaborating on an exclusive tailor-made custom adventure, contact our team to verify availability and hold your place.
                     </p>
                 </div>
             </div>

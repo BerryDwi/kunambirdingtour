@@ -31,7 +31,7 @@ class BookingTest extends TestCase
         $response = $this->get('/booking');
 
         $response->assertOk();
-        $response->assertSee('Booking with Birdtour Asia');
+        $response->assertSee('Booking with Kunam Birding Tours');
         $response->assertSee('Booking FAQs');
         $response->assertSee('How much is the deposit and when is it required?');
         $response->assertDontSee('Scheduled Tours Flowchart');

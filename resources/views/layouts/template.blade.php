@@ -5,16 +5,16 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     @php
-        $metaTitle = trim($__env->yieldContent('title', $settings['meta_title'] ?? 'Birdtour Asia: birding tours throughout the continent'));
+        $metaTitle = trim($__env->yieldContent('title', $settings['meta_title'] ?? 'Kunam Birding Tours: birding tours throughout the continent'));
         $metaDescription = trim($__env->yieldContent('meta_description', $settings['meta_description'] ?? 'Specialists in Asian birding tours, we offer the best in organised and tailor-made tours throughout the continent, from the Middle-east to New Guinea.'));
-        $metaImage = $settings['meta_image'] ?? 'https://cdn.prod.website-files.com/5df5bf90b0ebe7d8cd4333fb/5e8c523028289f697f322d6e_Birdtour-Asia-CMYK-logo.png';
+        $metaImage = filled($settings['meta_image'] ?? null) ? $settings['meta_image'] : asset('images/kunam-og.jpg');
         $canonicalUrl = url()->current();
     @endphp
     <title>{{ $metaTitle }}</title>
     <meta name="description" content="{{ $metaDescription }}">
     <link rel="canonical" href="{{ $canonicalUrl }}">
     <meta property="og:type" content="website">
-    <meta property="og:site_name" content="{{ $settings['site_name'] ?? 'Birdtour Asia' }}">
+    <meta property="og:site_name" content="{{ $settings['site_name'] ?? 'Kunam Birding Tours' }}">
     <meta property="og:title" content="{{ $metaTitle }}">
     <meta property="og:description" content="{{ $metaDescription }}">
     <meta property="og:url" content="{{ $canonicalUrl }}">
@@ -50,7 +50,7 @@
     <!-- Main Style CSS -->
     <link rel="stylesheet" href="{{ asset('meeta') }}/assets/css/style.css">
 
-    <!-- Custom Theme Adjustments for Birdtour Asia -->
+    <!-- Custom Theme Adjustments for Kunam Birding Tours -->
     <style>
         .header-logo img {
             max-height: 48px;
@@ -242,7 +242,7 @@
             <div class="offcanvas-header">
                 <div class="offcanvas-logo">
                     <a href="{{ route('home') }}">
-                        <img src="https://cdn.prod.website-files.com/5df5bf90b0ebe7d8cd4333fb/5e8c523028289f697f322d6e_Birdtour-Asia-CMYK-logo.png" alt="Birdtour Asia">
+                        <img src="{{ asset('images/kunam-logo.jpg') }}" alt="Kunam Birding Tours">
                     </a>
                 </div>
                 <button type="button" class="close-btn" data-bs-dismiss="offcanvas"><i class="flaticon-close"></i></button>

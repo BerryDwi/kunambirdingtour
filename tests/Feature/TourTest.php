@@ -25,7 +25,7 @@ class TourTest extends TestCase
         $response = $this->get('/');
 
         $response->assertOk();
-        $response->assertSee('Birdtour Asia');
+        $response->assertSee('Kunam Birding Tours');
         $response->assertSee('Latest news 14/10');
         $response->assertSee('Plover_Oriental', false);
         $response->assertSee('Selected Latest Tour Reports');

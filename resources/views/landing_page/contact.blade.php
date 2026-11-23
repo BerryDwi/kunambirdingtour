@@ -1,7 +1,7 @@
 @extends('layouts.template')
 
-@section('title', $settings['meta_title_contact'] ?? 'Contact us - Birdtour Asia')
-@section('meta_description', $settings['meta_description_contact'] ?? 'Contact Birdtour Asia to ask about scheduled departures, custom birding tours, or your existing booking.')
+@section('title', $settings['meta_title_contact'] ?? 'Contact us - Kunam Birding Tours')
+@section('meta_description', $settings['meta_description_contact'] ?? 'Contact Kunam Birding Tours to ask about scheduled departures, custom birding tours, or your existing booking.')
 
 @push('styles')
     <style>
@@ -65,7 +65,7 @@
 @section('content')
     <!-- Meeta Hero Slider for Contact Section -->
     <div class="meeta-hero-section position-relative">
-        <div class="meeta-hero-slider swiper" aria-label="Birdtour Asia Contact Slider">
+        <div class="meeta-hero-slider swiper" aria-label="Kunam Birding Tours Contact Slider">
             <div class="swiper-wrapper">
                 @foreach ($slides as $slide)
                     <div class="swiper-slide meeta-hero-slide">
@@ -82,7 +82,7 @@
                     In Touch</span>
                 <span class="text-white-50 small">Direct Assistance</span>
             </div>
-            <h4>Contact Birdtour Asia</h4>
+            <h4>Contact Kunam Birding Tours</h4>
             <p>
                 Reach our tour leaders in the field or office manager directly via Email, WhatsApp, or through our contact
                 form.
@@ -127,7 +127,7 @@
                             style="width: 60px; height: 3px; background-color: #087d50; border-radius: 2px;"></div>
                     </div>
                     <p class="lead text-secondary" style="font-size: 16.5px; line-height: 1.8;">
-                        If you would like to find out more about the services offered by <strong>Birdtour Asia</strong>, we
+                        If you would like to find out more about the services offered by <strong>Kunam Birding Tours</strong>, we
                         can be contacted by email, WhatsApp, Facebook, or through the online inquiry form below.
                     </p>
                 </div>

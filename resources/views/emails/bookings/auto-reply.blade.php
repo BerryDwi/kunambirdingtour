@@ -14,7 +14,7 @@
             <p style="margin-top: 0;">Dear {{ $booking->full_name }},</p>
 
             <p>
-                Thank you for contacting Birdtour Asia. We have received your inquiry for
+                Thank you for contacting Kunam Birding Tours. We have received your inquiry for
                 <strong>{{ $booking->tour_name }}</strong>@if ($booking->tour_year) ({{ $booking->tour_year }})@endif
                 and our team will verify availability before following up within 24&ndash;48 hours.
             </p>
@@ -49,7 +49,7 @@
 
             <p style="margin-bottom: 0;">
                 Kind regards,<br>
-                <strong>Birdtour Asia</strong><br>
+                <strong>Kunam Birding Tours</strong><br>
                 <a href="mailto:{{ \App\Models\Setting::officeEmail() }}" style="color: #087d50;">{{ \App\Models\Setting::officeEmail() }}</a>
             </p>
         </div>

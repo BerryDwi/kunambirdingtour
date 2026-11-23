@@ -30,7 +30,7 @@ class ContactTest extends TestCase
         $response = $this->get('/contact');
 
         $response->assertOk();
-        $response->assertSee('Contact Birdtour Asia');
+        $response->assertSee('Contact Kunam Birding Tours');
         $response->assertSee('info@birdtourasia.com');
         $response->assertSee('office@birdtourasia.com');
         $response->assertSee('+60142234220');

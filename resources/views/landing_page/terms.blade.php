@@ -1,7 +1,7 @@
 @extends('layouts.template')
 
-@section('title', $settings['meta_title_terms'] ?? 'Terms and Conditions - Birdtour Asia')
-@section('meta_description', $settings['meta_description_terms'] ?? 'Birdtour Asia booking terms and conditions, including payments, cancellations, insurance, and travel arrangements.')
+@section('title', $settings['meta_title_terms'] ?? 'Terms and Conditions - Kunam Birding Tours')
+@section('meta_description', $settings['meta_description_terms'] ?? 'Kunam Birding Tours booking terms and conditions, including payments, cancellations, insurance, and travel arrangements.')
 
 @push('styles')
 <style>
@@ -113,7 +113,7 @@
 @section('content')
     <!-- Meeta Hero Slider for Terms Section -->
     <div class="meeta-hero-section position-relative">
-        <div class="meeta-hero-slider swiper" aria-label="Birdtour Asia Terms Slider">
+        <div class="meeta-hero-slider swiper" aria-label="Kunam Birding Tours Terms Slider">
             <div class="swiper-wrapper">
                 @foreach ($slides as $slide)
                     <div class="swiper-slide meeta-hero-slide">

@@ -1,7 +1,7 @@
 @extends('layouts.template')
 
-@section('title', $settings['meta_title_leaders'] ?? 'Tour Leaders - Birdtour Asia')
-@section('meta_description', $settings['meta_description_leaders'] ?? 'Meet the experienced Birdtour Asia tour leaders who guide our scheduled and custom birding tours across Asia.')
+@section('title', $settings['meta_title_leaders'] ?? 'Tour Leaders - Kunam Birding Tours')
+@section('meta_description', $settings['meta_description_leaders'] ?? 'Meet the experienced Kunam Birding Tours tour leaders who guide our scheduled and custom birding tours across Asia.')
 
 @section('content')
     <!-- Meeta Hero Slider for Leaders -->
@@ -44,7 +44,7 @@
                     <!-- Intro Paragraph -->
                     <div class="lead text-secondary mb-5" style="font-size: 16.5px; line-height: 1.8;">
                         <p class="mb-3">
-                            Our leaders are a mix of Asian-based and Asian nationals, whom lead both our scheduled and custom tours. On top of the broad range of scheduled tours offered, we offer a range of custom tours, whether it be extensions to the advertised scheduled tours, but also stand-alone tours. Using Birdtour Asia in-house expertise we can tailor the custom tours to suit your requirements.
+                            Our leaders are a mix of Asian-based and Asian nationals, whom lead both our scheduled and custom tours. On top of the broad range of scheduled tours offered, we offer a range of custom tours, whether it be extensions to the advertised scheduled tours, but also stand-alone tours. Using Kunam Birding Tours in-house expertise we can tailor the custom tours to suit your requirements.
                         </p>
                         <p class="mb-0">
                             We use a number of locally-based guides for this, and are actively encouraging and promoting the use of young, keen guides throughout the region. Some of our most popular guides are below, though we also have several other guides who lead custom, private tours with us.

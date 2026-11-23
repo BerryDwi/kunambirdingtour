@@ -21,7 +21,7 @@ class ContactAutoReply extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'We received your message - Birdtour Asia',
+            subject: 'We received your message - Kunam Birding Tours',
         );
     }
 

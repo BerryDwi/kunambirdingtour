@@ -10,17 +10,18 @@ class BrandingTest extends TestCase
 {
     use RefreshDatabase;
 
-    private const LOGO = '5e8c523028289f697f322d6e_Birdtour-Asia-CMYK-logo.png';
+    private const LOGO = 'images/kunam-logo.jpg';
 
-    public function test_login_page_uses_the_birdtour_asia_logo(): void
+    public function test_login_page_uses_the_kunam_logo(): void
     {
         $this->get(route('admin.login'))
             ->assertOk()
             ->assertSee(self::LOGO, false)
+            ->assertSee('alt="Kunam Birding Tours"', false)
             ->assertDontSee('>BA<', false);
     }
 
-    public function test_admin_layout_uses_the_birdtour_asia_logo(): void
+    public function test_admin_layout_uses_the_kunam_logo(): void
     {
         $admin = User::factory()->create();
         $admin->forceFill(['is_admin' => true])->save();
@@ -29,6 +30,7 @@ class BrandingTest extends TestCase
             ->get(route('admin.dashboard'))
             ->assertOk()
             ->assertSee(self::LOGO, false)
+            ->assertSee('alt="Kunam Birding Tours"', false)
             ->assertDontSee('>BA<', false);
     }
 }
