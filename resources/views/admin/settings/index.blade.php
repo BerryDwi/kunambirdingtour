@@ -8,6 +8,56 @@
     @if ($groups->isEmpty())
         <x-admin.empty-state title="No settings yet" description="Add your first setting to start configuring the site." />
     @else
+        @if ($activeGroup === 'general')
+            <section class="mb-5 overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
+                <header class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200 bg-slate-50/70 px-5 py-3">
+                    <div>
+                        <h2 class="text-sm font-semibold uppercase tracking-wide text-slate-700">Site logo</h2>
+                        <p class="text-xs text-slate-500">Shown in the public header, mobile menu and the admin panel.</p>
+                    </div>
+                    <span class="rounded-full bg-slate-100 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-slate-500">{{ $hasCustomLogo ? 'Custom' : 'Default' }}</span>
+                </header>
+
+                <div class="grid gap-5 p-5 sm:grid-cols-[minmax(0,220px)_minmax(0,1fr)]">
+                    <div class="space-y-2">
+                        <div class="flex h-24 w-full items-center justify-center rounded-lg border border-slate-200 bg-slate-50 p-3">
+                            <img src="{{ $logoUrl }}" alt="Current site logo" class="max-h-full w-auto">
+                        </div>
+                        <p class="text-xs text-slate-500">Current logo in use</p>
+                    </div>
+
+                    <form method="POST" action="{{ route('admin.settings.update-logo') }}" enctype="multipart/form-data" class="space-y-3">
+                        @csrf
+
+                        <div>
+                            <label for="logo" class="text-sm font-medium text-slate-700">Upload a new logo</label>
+                            <input id="logo" name="logo" type="file" accept="image/png,image/jpeg,image/webp" class="mt-1 block w-full cursor-pointer rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-600 file:mr-3 file:rounded-md file:border-0 file:bg-brand-navy file:px-3 file:py-1.5 file:text-xs file:font-semibold file:text-white">
+                            <p class="mt-1 text-xs text-slate-400">PNG, JPG or WebP, up to 2 MB. A wide logo on a transparent background works best.</p>
+                            @error('logo')
+                                <p class="mt-1 text-xs font-medium text-red-600">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        <div>
+                            <label for="logo_url" class="text-sm font-medium text-slate-700">Or use an image URL</label>
+                            <input id="logo_url" name="logo_url" type="url" placeholder="https://example.com/logo.png" value="{{ old('logo_url') }}" class="mt-1 block w-full rounded-lg border border-slate-300 px-3 py-2 text-sm text-slate-900 shadow-sm outline-none transition focus:border-brand-green focus:ring-2 focus:ring-brand-green/20">
+                            @error('logo_url')
+                                <p class="mt-1 text-xs font-medium text-red-600">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        <div class="flex flex-wrap items-center gap-2">
+                            <button type="submit" class="inline-flex items-center rounded-lg bg-brand-navy px-4 py-2 text-sm font-semibold text-white transition hover:bg-brand-navy/90">Save logo</button>
+
+                            @if ($hasCustomLogo)
+                                <button type="submit" name="remove_logo" value="1" onclick="return confirm('Restore the default Kunam logo?')" class="inline-flex items-center rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-50">Use default logo</button>
+                            @endif
+                        </div>
+                    </form>
+                </div>
+            </section>
+        @endif
+
         <div class="flex flex-col gap-5 lg:grid lg:grid-cols-[220px_minmax(0,1fr)] lg:items-start">
             <nav class="flex gap-2 overflow-x-auto rounded-xl border border-slate-200 bg-white p-2 shadow-sm lg:flex-col lg:gap-1 lg:overflow-visible" aria-label="Setting groups">
                 @foreach ($groups as $group)

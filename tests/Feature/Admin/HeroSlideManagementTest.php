@@ -16,22 +16,15 @@ class HeroSlideManagementTest extends TestCase
     public function test_non_admin_users_cannot_access_hero_slides(): void
     {
         $this->actingAs(User::factory()->create())
-            ->get(route('admin.hero-slides.index'))
+            ->get(route('admin.hero-slides.create'))
             ->assertForbidden();
     }
 
-    public function test_admin_can_see_the_hero_slide_listing(): void
+    public function test_the_retired_hero_slide_listing_is_not_reachable(): void
     {
-        HeroSlide::factory()->create([
-            'page' => 'home',
-            'alt' => 'Oriental Plover',
-        ]);
-
         $this->actingAs($this->admin())
-            ->get(route('admin.hero-slides.index'))
-            ->assertOk()
-            ->assertSee('Oriental Plover')
-            ->assertSee('Home');
+            ->get('/admin/hero-slides')
+            ->assertMethodNotAllowed();
     }
 
     public function test_admin_can_create_a_slide_with_an_uploaded_image(): void
@@ -48,7 +41,7 @@ class HeroSlideManagementTest extends TestCase
                 'is_active' => '1',
                 'image_file' => UploadedFile::fake()->image('hero.jpg'),
             ])
-            ->assertRedirect(route('admin.hero-slides.index'));
+            ->assertRedirect(route('admin.dashboard'));
 
         $slide = HeroSlide::query()->where('alt', 'Scheduled tours hero')->firstOrFail();
 
@@ -68,7 +61,7 @@ class HeroSlideManagementTest extends TestCase
                 'image' => 'https://cdn.example.com/leaders.jpg',
                 'is_active' => '1',
             ])
-            ->assertRedirect(route('admin.hero-slides.index'));
+            ->assertRedirect(route('admin.dashboard'));
 
         $this->assertDatabaseHas('hero_slides', [
             'page' => 'leaders',
@@ -104,7 +97,7 @@ class HeroSlideManagementTest extends TestCase
                 'title' => 'New title',
                 'is_active' => '0',
             ])
-            ->assertRedirect(route('admin.hero-slides.index'));
+            ->assertRedirect(route('admin.dashboard'));
 
         $slide->refresh();
 
@@ -125,7 +118,7 @@ class HeroSlideManagementTest extends TestCase
                 'page' => $slide->page,
                 'image_file' => UploadedFile::fake()->image('new.jpg'),
             ])
-            ->assertRedirect(route('admin.hero-slides.index'));
+            ->assertRedirect(route('admin.dashboard'));
 
         $slide->refresh();
 
@@ -160,7 +153,7 @@ class HeroSlideManagementTest extends TestCase
 
         $this->actingAs($this->admin())
             ->delete(route('admin.hero-slides.destroy', $slide))
-            ->assertRedirect(route('admin.hero-slides.index'));
+            ->assertRedirect(route('admin.dashboard'));
 
         $this->assertDatabaseMissing('hero_slides', ['id' => $slide->id]);
         Storage::disk('public_uploads')->assertMissing('hero-slides/old.jpg');
@@ -172,7 +165,7 @@ class HeroSlideManagementTest extends TestCase
         HeroSlide::factory()->create(['page' => 'tours', 'alt' => 'Tours slide']);
 
         $this->actingAs($this->admin())
-            ->get(route('admin.hero-slides.index', ['hero_page' => 'tours']))
+            ->get(route('admin.pages.show', 'tours'))
             ->assertOk()
             ->assertSee('Tours slide')
             ->assertDontSee('Home slide');

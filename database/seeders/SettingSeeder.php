@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Enums\SitePage;
 use App\Models\Setting;
 use Illuminate\Database\Seeder;
 
@@ -31,9 +32,10 @@ class SettingSeeder extends Seeder
      */
     private function settings(): array
     {
-        return [
+        $settings = [
             // General
             ['key' => 'site_name', 'value' => 'Kunam Birding Tours', 'group' => 'general'],
+            ['key' => 'site_logo', 'value' => '', 'group' => 'general'],
             ['key' => 'site_tagline', 'value' => 'Specialists in Asian Birding Tours', 'group' => 'general'],
             ['key' => 'site_description', 'value' => 'Specialists in Asian birding tours, we offer the best in organised and tailor-made tours throughout the continent, from the Middle-east to New Guinea.', 'group' => 'general', 'type' => 'text'],
             ['key' => 'company_name', 'value' => 'Birdtour Asia Limited', 'group' => 'general'],
@@ -66,13 +68,7 @@ class SettingSeeder extends Seeder
             ['key' => 'facebook_url', 'value' => 'https://www.facebook.com/birdtourasia', 'group' => 'social'],
             ['key' => 'facebook_button_label', 'value' => 'Visit Facebook Page', 'group' => 'social'],
 
-            // Home page
-            ['key' => 'home_announcement_badge', 'value' => 'Field Update', 'group' => 'home'],
-            ['key' => 'home_announcement_date', 'value' => '14/10 Announcement', 'group' => 'home'],
-            ['key' => 'home_announcement_title', 'value' => 'Latest news 14/10', 'group' => 'home'],
-            ['key' => 'home_announcement_body', 'value' => '2027: we have spaces on Laos and Cambodia in March, Lesser Florican & Western Himalaya tour in July and Sulawesi islands Cruise.', 'group' => 'home', 'type' => 'text'],
-            ['key' => 'home_announcement_cta_label', 'value' => 'View 2027 Departures', 'group' => 'home'],
-            ['key' => 'home_announcement_cta_url', 'value' => '/tours', 'group' => 'home'],
+            // Home page (hero text comes from SitePage::Home)
             ['key' => 'home_about_title', 'value' => 'Specialists in Asian Birding Tours', 'group' => 'home'],
             ['key' => 'home_about_body', 'value' => implode("\n\n", [
                 'Kunam Birding Tours are the specialists in birding tours, offering the best in organised and tailor-made custom tours throughout the region for 20 years. We offer you the best possible bird-tour experience through a combination of the most experienced and knowledgeable leaders in the region, small group sizes, a friendly and relaxed atmosphere, and of course some of the finest birding in the world.',
@@ -106,5 +102,18 @@ class SettingSeeder extends Seeder
             ['key' => 'meta_title_terms', 'value' => 'Terms and Conditions - Kunam Birding Tours', 'group' => 'seo'],
             ['key' => 'meta_description_terms', 'value' => 'Kunam Birding Tours booking terms and conditions, including payments, cancellations, insurance, and travel arrangements.', 'group' => 'seo', 'type' => 'text'],
         ];
+
+        foreach (SitePage::cases() as $page) {
+            foreach ($page->heroSettingDefaults() as $key => $value) {
+                $settings[] = [
+                    'key' => $key,
+                    'value' => $value,
+                    'group' => $page->value,
+                    'type' => str_ends_with($key, '_body') || str_ends_with($key, '_text') ? 'text' : 'string',
+                ];
+            }
+        }
+
+        return $settings;
     }
 }

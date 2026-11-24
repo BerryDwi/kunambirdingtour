@@ -1,4 +1,13 @@
 @php
+    $currentPage = request()->route('page');
+
+    $pageItems = array_map(fn (\App\Enums\SitePage $page): array => [
+        'label' => $page->label(),
+        'route' => 'admin.pages.show',
+        'params' => ['page' => $page->value],
+        'active' => request()->routeIs('admin.pages.*') && $currentPage === $page,
+    ], \App\Enums\SitePage::cases());
+
     $navigationGroups = [
         [
             'label' => 'Home',
@@ -18,9 +27,13 @@
             ],
         ],
         [
+            'label' => 'Pages',
+            'collapsible' => true,
+            'items' => $pageItems,
+        ],
+        [
             'label' => 'Site',
             'items' => [
-                ['label' => 'Hero Slides', 'route' => 'admin.hero-slides.index', 'active' => request()->routeIs('admin.hero-slides.*')],
                 ['label' => 'Settings', 'route' => 'admin.settings.index', 'active' => request()->routeIs('admin.settings.*')],
             ],
         ],
@@ -64,21 +77,66 @@
 
             <nav class="min-h-0 flex-1 space-y-1 overflow-y-auto overscroll-contain scrollbar-none px-3 py-4">
                 @foreach ($navigationGroups as $group)
-                    <p class="px-2 pb-2 {{ $loop->first ? '' : 'pt-5' }} text-[11px] font-semibold uppercase tracking-wider text-slate-500">{{ $group['label'] }}</p>
+                    @php
+                        $isCollapsible = $group['collapsible'] ?? false;
+                        $hasActiveItem = collect($group['items'])->contains(fn (array $item): bool => $item['active']);
+                    @endphp
 
-                    @foreach ($group['items'] as $item)
-                        <a
-                            href="{{ route($item['route']) }}"
-                            @class([
-                                'flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition',
-                                'bg-white/10 text-white' => $item['active'],
-                                'text-slate-300 hover:bg-white/5 hover:text-white' => ! $item['active'],
-                            ])
-                        >
-                            <span class="size-1.5 rounded-full {{ $item['active'] ? 'bg-brand-green' : 'bg-slate-600' }}"></span>
-                            {{ $item['label'] }}
-                        </a>
-                    @endforeach
+                    @if ($isCollapsible)
+                        @if ($hasActiveItem)
+                            <details class="group/nav {{ $loop->first ? '' : 'mt-5' }}" open>
+                        @else
+                            <details class="group/nav {{ $loop->first ? '' : 'mt-5' }}">
+                        @endif
+                            <summary
+                                @class([
+                                    'flex cursor-pointer list-none items-center justify-between gap-2 rounded-lg px-2 py-2 text-[11px] font-semibold uppercase tracking-wider transition [&::-webkit-details-marker]:hidden',
+                                    'text-white' => $hasActiveItem,
+                                    'text-slate-500 hover:text-slate-300' => ! $hasActiveItem,
+                                ])
+                            >
+                                <span class="flex items-center gap-2">
+                                    <span class="size-1.5 rounded-full {{ $hasActiveItem ? 'bg-brand-green' : 'bg-slate-600' }}"></span>
+                                    {{ $group['label'] }}
+                                </span>
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" class="size-4 shrink-0 text-slate-500 transition-transform duration-200 group-open/nav:rotate-180">
+                                    <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 11.168l3.71-3.938a.75.75 0 1 1 1.08 1.04l-4.25 4.5a.75.75 0 0 1-1.08 0l-4.25-4.5a.75.75 0 0 1 .02-1.06Z" clip-rule="evenodd" />
+                                </svg>
+                            </summary>
+
+                            <div class="mt-1 space-y-1 border-l border-white/10 pl-2">
+                                @foreach ($group['items'] as $item)
+                                    <a
+                                        href="{{ route($item['route'], $item['params'] ?? []) }}"
+                                        @class([
+                                            'flex items-center gap-3 rounded-lg px-3 py-1.5 text-sm font-medium transition',
+                                            'bg-white/10 text-white' => $item['active'],
+                                            'text-slate-300 hover:bg-white/5 hover:text-white' => ! $item['active'],
+                                        ])
+                                    >
+                                        <span class="size-1.5 rounded-full {{ $item['active'] ? 'bg-brand-green' : 'bg-slate-600' }}"></span>
+                                        {{ $item['label'] }}
+                                    </a>
+                                @endforeach
+                            </div>
+                        </details>
+                    @else
+                        <p class="px-2 pb-2 {{ $loop->first ? '' : 'pt-5' }} text-[11px] font-semibold uppercase tracking-wider text-slate-500">{{ $group['label'] }}</p>
+
+                        @foreach ($group['items'] as $item)
+                            <a
+                                href="{{ route($item['route'], $item['params'] ?? []) }}"
+                                @class([
+                                    'flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition',
+                                    'bg-white/10 text-white' => $item['active'],
+                                    'text-slate-300 hover:bg-white/5 hover:text-white' => ! $item['active'],
+                                ])
+                            >
+                                <span class="size-1.5 rounded-full {{ $item['active'] ? 'bg-brand-green' : 'bg-slate-600' }}"></span>
+                                {{ $item['label'] }}
+                            </a>
+                        @endforeach
+                    @endif
                 @endforeach
             </nav>
 

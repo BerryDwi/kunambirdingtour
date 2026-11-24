@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Enums\SitePage;
 use App\Http\Controllers\Admin\Concerns\ManagesImages;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\HeroSlideRequest;
@@ -43,17 +44,18 @@ class HeroSlideController extends Controller
         return view('admin.hero-slides.index', [
             'slides' => $slides,
             'filters' => $filters,
-            'pages' => HeroSlideRequest::PAGES,
+            'pages' => SitePage::values(),
         ]);
     }
 
     /**
      * Show the form for creating a new hero slide.
      */
-    public function create(): View
+    public function create(Request $request): View
     {
         return view('admin.hero-slides.create', [
-            'pages' => HeroSlideRequest::PAGES,
+            'pages' => SitePage::values(),
+            'returnPage' => $this->resolveReturnPage($request->query('page')),
         ]);
     }
 
@@ -70,19 +72,18 @@ class HeroSlideController extends Controller
 
         HeroSlide::create($data);
 
-        return redirect()
-            ->route('admin.hero-slides.index')
-            ->with('status', 'Hero slide created successfully.');
+        return $this->redirectAfterChange($request, 'Hero slide created successfully.');
     }
 
     /**
      * Show the form for editing the given hero slide.
      */
-    public function edit(HeroSlide $heroSlide): View
+    public function edit(Request $request, HeroSlide $heroSlide): View
     {
         return view('admin.hero-slides.edit', [
             'slide' => $heroSlide,
-            'pages' => HeroSlideRequest::PAGES,
+            'pages' => SitePage::values(),
+            'returnPage' => $this->resolveReturnPage($request->query('page')),
         ]);
     }
 
@@ -99,22 +100,44 @@ class HeroSlideController extends Controller
 
         $heroSlide->update($data);
 
-        return redirect()
-            ->route('admin.hero-slides.index')
-            ->with('status', 'Hero slide updated successfully.');
+        return $this->redirectAfterChange($request, 'Hero slide updated successfully.');
     }
 
     /**
      * Delete the given hero slide.
      */
-    public function destroy(HeroSlide $heroSlide): RedirectResponse
+    public function destroy(Request $request, HeroSlide $heroSlide): RedirectResponse
     {
         $this->deleteStoredImage($heroSlide->image);
 
         $heroSlide->delete();
 
+        return $this->redirectAfterChange($request, 'Hero slide deleted successfully.');
+    }
+
+    /**
+     * Resolve a page settings return target from the request.
+     */
+    private function resolveReturnPage(mixed $value): ?SitePage
+    {
+        return is_string($value) ? SitePage::tryFrom($value) : null;
+    }
+
+    /**
+     * Redirect back to page settings when the change was made there.
+     */
+    private function redirectAfterChange(Request $request, string $message): RedirectResponse
+    {
+        $returnPage = $this->resolveReturnPage($request->input('return_page'));
+
+        if ($returnPage !== null) {
+            return redirect()
+                ->route('admin.pages.show', $returnPage->value)
+                ->with('status', $message);
+        }
+
         return redirect()
-            ->route('admin.hero-slides.index')
-            ->with('status', 'Hero slide deleted successfully.');
+            ->route('admin.dashboard')
+            ->with('status', $message);
     }
 }

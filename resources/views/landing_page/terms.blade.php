@@ -123,22 +123,8 @@
             </div>
         </div>
 
-        <!-- Floating Announcement Overlay (Meeta Theme) -->
-        <div class="bta-announcement-overlay">
-            <div class="d-flex align-items-center gap-2 mb-2">
-                <span class="badge bg-success text-uppercase px-2 py-1" style="font-size: 11px; letter-spacing: 0.5px;">Legal &amp; Policy</span>
-                <span class="text-white-50 small">Booking Conditions</span>
-            </div>
-            <h4>Terms and Conditions</h4>
-            <p>
-                Transparent contractual policies, small-group operational standards, and 100% financial insolvency protection under UK &amp; EU Package Travel Regulations.
-            </p>
-            <div class="mt-3 d-flex flex-wrap gap-2">
-                <a href="#financial-security" class="btn btn-sm btn-primary py-1 px-3">Financial Security &darr;</a>
-                <a href="#payment" class="btn btn-sm btn-outline-light py-1 px-3">Payment Terms</a>
-                <a href="#cancellations" class="btn btn-sm btn-outline-light py-1 px-3">Cancellations</a>
-            </div>
-        </div>
+        <!-- Floating Announcement Overlay (per-page settings) -->
+        @include('landing_page.partials.hero_overlay', ['page' => 'terms'])
     </div>
     <!-- Hero Slider End -->
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Admin\Concerns\ManagesImages;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\SettingRequest;
 use App\Models\Setting;
@@ -11,6 +12,8 @@ use Illuminate\View\View;
 
 class SettingController extends Controller
 {
+    use ManagesImages;
+
     /**
      * Human-readable labels for the known setting groups.
      *
@@ -30,11 +33,16 @@ class SettingController extends Controller
      */
     public function index(Request $request): View
     {
-        $settings = Setting::query()
-            ->orderBy('group')
+        $settingsByGroup = Setting::query()
+            ->whereIn('group', array_keys(self::GROUP_LABELS))
+            ->where('key', '!=', 'site_logo')
             ->orderBy('key')
             ->get()
             ->groupBy('group');
+
+        $settings = collect(array_keys(self::GROUP_LABELS))
+            ->filter(fn (string $group): bool => $settingsByGroup->has($group))
+            ->mapWithKeys(fn (string $group): array => [$group => $settingsByGroup->get($group)]);
 
         $groups = $settings
             ->map(fn ($groupSettings, string $group): array => [
@@ -53,6 +61,8 @@ class SettingController extends Controller
             'activeGroup' => $activeGroup,
             'activeLabel' => $activeGroupData['label'] ?? null,
             'activeSettings' => $activeGroup ? $settings->get($activeGroup) : collect(),
+            'logoUrl' => Setting::logoUrl(),
+            'hasCustomLogo' => Setting::hasCustomLogo(),
         ]);
     }
 
@@ -61,10 +71,14 @@ class SettingController extends Controller
      */
     public function create(Request $request): View
     {
-        $groupKeys = Setting::query()
+        $existingGroups = Setting::query()
+            ->whereIn('group', array_keys(self::GROUP_LABELS))
             ->distinct()
-            ->orderBy('group')
             ->pluck('group');
+
+        $groupKeys = collect(array_keys(self::GROUP_LABELS))
+            ->filter(fn (string $group): bool => $existingGroups->contains($group))
+            ->values();
 
         $requestedGroup = (string) $request->query('group', '');
         $group = $groupKeys->contains($requestedGroup) ? $requestedGroup : ($groupKeys->first() ?? 'general');
@@ -89,10 +103,48 @@ class SettingController extends Controller
     }
 
     /**
+     * Upload, link or reset the site logo.
+     */
+    public function updateLogo(Request $request): RedirectResponse
+    {
+        $request->validate([
+            'logo' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
+            'logo_url' => ['nullable', 'url:http,https', 'max:2048'],
+            'remove_logo' => ['nullable', 'boolean'],
+        ]);
+
+        $current = (string) (Setting::values()['site_logo'] ?? '');
+
+        if ($request->boolean('remove_logo')) {
+            $this->deleteStoredImage($current);
+            $logo = '';
+        } elseif ($request->hasFile('logo')) {
+            $this->deleteStoredImage($current);
+            $logo = (string) $request->file('logo')->store('branding', 'public_uploads');
+        } elseif (filled($request->input('logo_url'))) {
+            $this->deleteStoredImage($current);
+            $logo = trim((string) $request->input('logo_url'));
+        } else {
+            return back()->withErrors(['logo' => 'Choose an image file or paste an image URL before saving.']);
+        }
+
+        Setting::updateOrCreate(
+            ['key' => 'site_logo'],
+            ['value' => $logo, 'type' => 'string', 'group' => 'general'],
+        );
+
+        return redirect()
+            ->route('admin.settings.index', ['group' => 'general'])
+            ->with('status', 'Site logo updated successfully.');
+    }
+
+    /**
      * Update every setting value in the given group.
      */
     public function updateGroup(Request $request, string $group): RedirectResponse
     {
+        abort_unless(in_array($group, array_keys(self::GROUP_LABELS), true), 404);
+
         $data = $request->validate([
             'values' => ['required', 'array'],
             'values.*' => ['nullable', 'string'],

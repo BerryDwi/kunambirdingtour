@@ -185,7 +185,7 @@
                             <!-- Header Logo Start -->
                             <div class="header-logo">
                                 <a href="{{ route('home') }}">
-                                    <img src="{{ asset('images/kunam-logo.jpg') }}" alt="Kunam Birding Tours" class="rounded">
+                                    <img src="{{ \App\Models\Setting::logoUrl() }}" alt="Kunam Birding Tours" class="rounded">
                                 </a>
                             </div>
                             <!-- Header Logo End -->
@@ -242,7 +242,7 @@
             <div class="offcanvas-header">
                 <div class="offcanvas-logo">
                     <a href="{{ route('home') }}">
-                        <img src="{{ asset('images/kunam-logo.jpg') }}" alt="Kunam Birding Tours">
+                        <img src="{{ \App\Models\Setting::logoUrl() }}" alt="Kunam Birding Tours">
                     </a>
                 </div>
                 <button type="button" class="close-btn" data-bs-dismiss="offcanvas"><i class="flaticon-close"></i></button>

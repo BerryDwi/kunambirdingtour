@@ -12,8 +12,8 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="page-banner text-center">
-                            <h2 class="title">{{ $hero?->title ?? 'Scheduled Tours' }}</h2>
-                            <p class="text-white-50 mt-2">{{ $hero?->text ?? '2027 - 2028 Scheduled Tour Calendar' }}</p>
+                            <h2 class="title">{{ filled($settings['tours_hero_title'] ?? null) ? $settings['tours_hero_title'] : ($hero?->title ?? 'Scheduled Tours') }}</h2>
+                            <p class="text-white-50 mt-2">{{ filled($settings['tours_hero_text'] ?? null) ? $settings['tours_hero_text'] : ($hero?->text ?? '2027 - 2028 Scheduled Tour Calendar') }}</p>
                         </div>
                     </div>
                 </div>

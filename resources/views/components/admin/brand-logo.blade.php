@@ -1,7 +1,7 @@
 @props(['size' => 'h-9', 'framed' => false])
 
 @php
-    $src = asset('images/kunam-logo.jpg');
+    $src = \App\Models\Setting::logoUrl();
 @endphp
 
 @if ($framed)

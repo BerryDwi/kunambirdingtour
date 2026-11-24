@@ -41,22 +41,8 @@
             </div>
         </div>
 
-        <!-- Floating Announcement Overlay (Meeta Theme) -->
-        <div class="bta-announcement-overlay">
-            <div class="d-flex align-items-center gap-2 mb-2">
-                <span class="badge bg-success text-uppercase px-2 py-1" style="font-size: 11px; letter-spacing: 0.5px;">Reservations &amp; Booking</span>
-                <span class="text-white-50 small">2027 &ndash; 2028 Tours</span>
-            </div>
-            <h4>Booking with Kunam Birding Tours</h4>
-            <p>
-                A clear, simple, and transparent booking process for both our scheduled departures and tailor-made custom tours.
-            </p>
-            <div class="mt-3 d-flex flex-wrap gap-2">
-                <a href="#booking-faq" class="btn btn-sm btn-primary py-1 px-3">Booking FAQs &darr;</a>
-                <a href="{{ route('tours') }}" class="btn btn-sm btn-outline-light py-1 px-3">View Tours &rarr;</a>
-                <a href="{{ route('contact') }}" class="btn btn-sm btn-outline-light py-1 px-3">Contact Us</a>
-            </div>
-        </div>
+        <!-- Floating Announcement Overlay (per-page settings) -->
+        @include('landing_page.partials.hero_overlay', ['page' => 'booking'])
     </div>
     <!-- Hero Slider End -->
 

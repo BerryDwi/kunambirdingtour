@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Str;
 
 #[Fillable(['key', 'value', 'type', 'group'])]
 class Setting extends Model
@@ -56,6 +57,32 @@ class Setting extends Model
             ?? config('admin.email')
             ?? config('mail.from.address')
             ?? 'office@birdtourasia.com';
+    }
+
+    /**
+     * Resolve the public URL for the site logo, falling back to the bundled asset.
+     */
+    public static function logoUrl(): string
+    {
+        $logo = static::values()['site_logo'] ?? null;
+
+        if (blank($logo)) {
+            return asset('images/kunam-logo.jpg');
+        }
+
+        if (Str::startsWith($logo, ['http://', 'https://', '//'])) {
+            return $logo;
+        }
+
+        return asset('uploads/'.ltrim((string) $logo, '/'));
+    }
+
+    /**
+     * Determine whether a custom logo has been uploaded or linked.
+     */
+    public static function hasCustomLogo(): bool
+    {
+        return filled(static::values()['site_logo'] ?? null);
     }
 
     #[Scope]

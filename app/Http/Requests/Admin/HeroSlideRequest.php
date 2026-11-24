@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Admin;
 
+use App\Enums\SitePage;
 use App\Models\HeroSlide;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
@@ -10,13 +11,6 @@ use Illuminate\Validation\Validator;
 
 class HeroSlideRequest extends FormRequest
 {
-    /**
-     * The pages that support hero slides.
-     *
-     * @var array<int, string>
-     */
-    public const PAGES = ['home', 'tours', 'custom-tours', 'reports', 'leaders', 'booking', 'contact', 'terms'];
-
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -44,7 +38,7 @@ class HeroSlideRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'page' => ['required', Rule::in(self::PAGES)],
+            'page' => ['required', Rule::in(SitePage::values())],
             'image' => ['nullable', 'string', 'max:2048'],
             'image_file' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:4096'],
             'alt' => ['nullable', 'string', 'max:255'],

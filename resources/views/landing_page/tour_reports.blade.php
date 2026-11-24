@@ -16,16 +16,8 @@
             </div>
         </div>
 
-        <!-- Floating Announcement Overlay (Meeta Theme) -->
-        <div class="bta-announcement-overlay">
-            <div class="d-flex align-items-center gap-2 mb-2">
-                <span class="badge bg-success text-uppercase px-2 py-1" style="font-size: 11px; letter-spacing: 0.5px;">Trip Archives</span>
-            </div>
-            <h4>Tour Reports</h4>
-            <p>
-                Click below for latest, or specific country reports. Downloadable PDF reports and species checklists from 2005 to date.
-            </p>
-        </div>
+        <!-- Floating Announcement Overlay (per-page settings) -->
+        @include('landing_page.partials.hero_overlay', ['page' => 'reports'])
     </div>
     <!-- Hero Slider End -->
 

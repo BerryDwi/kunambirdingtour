@@ -1,16 +1,20 @@
 @php
     $slide = $slide ?? null;
-    $pages = $pages ?? \App\Http\Requests\Admin\HeroSlideRequest::PAGES;
+    $pages = $pages ?? \App\Enums\SitePage::values();
     $inputClass = 'block w-full rounded-lg border border-slate-300 px-3 py-2 text-sm text-slate-900 shadow-sm outline-none transition focus:border-brand-green focus:ring-2 focus:ring-brand-green/20';
     $externalImage = filled($slide?->image) && \Illuminate\Support\Str::startsWith($slide->image, ['http://', 'https://', '//']) ? $slide->image : '';
 @endphp
 
 <div class="space-y-6">
+    @if (filled(request('page')))
+        <input type="hidden" name="return_page" value="{{ request('page') }}">
+    @endif
+
     <div class="grid gap-4 sm:grid-cols-2">
         <x-admin.form.field label="Page" name="page">
             <select id="page" name="page" class="{{ $inputClass }}">
                 @foreach ($pages as $page)
-                    <option value="{{ $page }}" @selected(old('page', $slide?->page ?? 'home') === $page)>{{ ucfirst(str_replace('-', ' ', $page)) }}</option>
+                    <option value="{{ $page }}" @selected(old('page', $slide?->page ?? request('page') ?? 'home') === $page)>{{ ucfirst(str_replace('-', ' ', $page)) }}</option>
                 @endforeach
             </select>
         </x-admin.form.field>

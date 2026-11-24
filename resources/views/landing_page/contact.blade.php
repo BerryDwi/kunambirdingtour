@@ -75,23 +75,8 @@
             </div>
         </div>
 
-        <!-- Floating Announcement Overlay (Meeta Theme) -->
-        <div class="bta-announcement-overlay">
-            <div class="d-flex align-items-center gap-2 mb-2">
-                <span class="badge bg-success text-uppercase px-2 py-1" style="font-size: 11px; letter-spacing: 0.5px;">Get
-                    In Touch</span>
-                <span class="text-white-50 small">Direct Assistance</span>
-            </div>
-            <h4>Contact Kunam Birding Tours</h4>
-            <p>
-                Reach our tour leaders in the field or office manager directly via Email, WhatsApp, or through our contact
-                form.
-            </p>
-            <div class="mt-3 d-flex flex-wrap gap-2">
-                <a href="#contact-channels" class="btn btn-sm btn-primary py-1 px-3">Contact Details &darr;</a>
-                <a href="#contact-form-section" class="btn btn-sm btn-outline-light py-1 px-3">Send a Message &rarr;</a>
-            </div>
-        </div>
+        <!-- Floating Announcement Overlay (per-page settings) -->
+        @include('landing_page.partials.hero_overlay', ['page' => 'contact'])
     </div>
     <!-- Hero Slider End -->
 

@@ -29,7 +29,7 @@ class DatabaseSeederTest extends TestCase
     {
         $this->seed(DatabaseSeeder::class);
 
-        $this->assertSame(57, Setting::count());
+        $this->assertSame(106, Setting::count());
         $this->assertSame(30, HeroSlide::count());
         $this->assertSame(16, Tour::count());
         $this->assertSame(15, Leader::count());
@@ -69,7 +69,7 @@ class DatabaseSeederTest extends TestCase
         $this->seed(DatabaseSeeder::class);
         $this->seed(DatabaseSeeder::class);
 
-        $this->assertSame(57, Setting::count());
+        $this->assertSame(106, Setting::count());
         $this->assertSame(30, HeroSlide::count());
         $this->assertSame(16, Tour::count());
         $this->assertSame(15, Leader::count());
